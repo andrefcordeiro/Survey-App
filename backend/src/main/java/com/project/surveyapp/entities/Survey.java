@@ -2,12 +2,15 @@ package com.project.surveyapp.entities;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_survey")
-public class Survey {
+public class Survey implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,14 +24,18 @@ public class Survey {
     @JoinColumn(name = "coordinator_id")
     private Coordinator coordinator;
 
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
+    private Set<Question> questions = new HashSet<>();
+
     public Survey() {
     }
 
-    public Survey(Long id, String title, LocalDate timeframe, Coordinator coordinator) {
+    public Survey(Long id, String title, LocalDate timeframe, Coordinator coordinator, Set<Question> questions) {
         this.id = id;
         this.title = title;
         this.timeframe = timeframe;
         this.coordinator = coordinator;
+        this.questions = questions;
     }
 
     public Long getId() {
@@ -61,6 +68,10 @@ public class Survey {
 
     public void setCoordinator(Coordinator coordinator) {
         this.coordinator = coordinator;
+    }
+
+    public Set<Question> getQuestions() {
+        return questions;
     }
 
     @Override
