@@ -27,6 +27,9 @@ public class Survey implements Serializable {
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
     private Set<Question> questions = new HashSet<>();
 
+    @OneToMany(mappedBy = "id.survey")
+    private Set<RespondedSurvey> respondents = new HashSet<>();
+
     public Survey() {
     }
 
@@ -72,6 +75,10 @@ public class Survey implements Serializable {
 
     public Set<Question> getQuestions() {
         return questions;
+    }
+
+    public Set<RespondedSurvey> getRespondents() {
+        return respondents;
     }
 
     @Override

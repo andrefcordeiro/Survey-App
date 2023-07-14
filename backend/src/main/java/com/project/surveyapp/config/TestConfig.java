@@ -1,10 +1,11 @@
 package com.project.surveyapp.config;
 
-import com.project.surveyapp.entities.Coordinator;
-import com.project.surveyapp.entities.Question;
-import com.project.surveyapp.entities.Survey;
+import com.project.surveyapp.entities.*;
 import com.project.surveyapp.entities.pk.QuestionPK;
+import com.project.surveyapp.entities.pk.RespondedSurveyPK;
 import com.project.surveyapp.repositories.CoordinatorRepository;
+import com.project.surveyapp.repositories.RespondedSurveyRepository;
+import com.project.surveyapp.repositories.RespondentRepository;
 import com.project.surveyapp.repositories.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,10 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Configuration
 @Profile("test")
@@ -26,6 +24,12 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private SurveyRepository surveyRepository;
+
+    @Autowired
+    private RespondentRepository respondentRepository;
+
+    @Autowired
+    private RespondedSurveyRepository respondedSurveyRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -60,6 +64,18 @@ public class TestConfig implements CommandLineRunner {
         q1s2.setSurvey(s2);
 
         surveyRepository.saveAll(Arrays.asList(s1, s2));
+
+        Respondent r1 = new Respondent(null, "Joao", "joao@gmail.com", "juao", "1234");
+        Respondent r2 = new Respondent(null, "Maria", "maria@gmail.com", "maria", "123");
+
+        respondentRepository.saveAll(Arrays.asList(r1, r2));
+
+        RespondedSurvey r1s1 = new RespondedSurvey(r1, s1, new Date());
+        RespondedSurvey r1s2 = new RespondedSurvey(r1, s2, new Date());
+
+        RespondedSurvey r2s1 = new RespondedSurvey(r2, s1, new Date());
+
+        respondedSurveyRepository.saveAll(Arrays.asList(r1s1, r1s2, r2s1));
 
         System.out.println("Finalizado!!!");
     }
