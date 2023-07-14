@@ -2,13 +2,13 @@ package com.project.surveyapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.surveyapp.entities.pk.RespondedSurveyPK;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_responded_survey")
@@ -19,13 +19,17 @@ public class RespondedSurvey implements Serializable {
 
     private Date completionDate;
 
+    @OneToMany(mappedBy = "id.respondedSurvey", cascade = CascadeType.ALL)
+    private Set<RespondedQuestion> respondedQuestions = new HashSet<>();
+
     public RespondedSurvey() {
     }
 
-    public RespondedSurvey(Respondent respondent, Survey survey, Date completionDate) {
+    public RespondedSurvey(Respondent respondent, Survey survey, Date completionDate, Set<RespondedQuestion> respondedQuestions) {
         this.id.setRespondent(respondent);
         this.id.setSurvey(survey);
         this.completionDate = completionDate;
+        this.respondedQuestions = respondedQuestions;
     }
 
     @JsonIgnore
@@ -45,20 +49,16 @@ public class RespondedSurvey implements Serializable {
         this.id.setSurvey(survey);
     }
 
-    public RespondedSurveyPK getId() {
-        return id;
-    }
-
-    public void setId(RespondedSurveyPK id) {
-        this.id = id;
-    }
-
     public Date getCompletionDate() {
         return completionDate;
     }
 
     public void setCompletionDate(Date completionDate) {
         this.completionDate = completionDate;
+    }
+
+    public Set<RespondedQuestion> getRespondedQuestions() {
+        return respondedQuestions;
     }
 
     @Override

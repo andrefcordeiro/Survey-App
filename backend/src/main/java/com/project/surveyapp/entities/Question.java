@@ -1,20 +1,22 @@
 package com.project.surveyapp.entities;
 
-import com.project.surveyapp.entities.pk.QuestionPK;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_question")
 public class Question implements Serializable {
 
-    @EmbeddedId
-    private QuestionPK questionPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @MapsId("surveyId")
     @ManyToOne
+    @JoinColumn(name = "survey_id")
     private Survey survey;
 
     private String text;
@@ -25,11 +27,13 @@ public class Question implements Serializable {
     private String option4;
     private String option5;
 
+    @OneToMany(mappedBy = "id.question")
+    private Set<RespondedQuestion> respondedQuestions = new HashSet<>();
+
     public Question() {
     }
 
-    public Question(QuestionPK questionPK, String text, String option1, String option2, String option3, String option4, String option5) {
-        this.questionPK = questionPK;
+    public Question(String text, String option1, String option2, String option3, String option4, String option5) {
         this.text = text;
         this.option1 = option1;
         this.option2 = option2;
@@ -38,12 +42,16 @@ public class Question implements Serializable {
         this.option5 = option5;
     }
 
-    public QuestionPK getQuestionPK() {
-        return questionPK;
+    public Long getId() {
+        return id;
     }
 
-    public void setQuestionPK(QuestionPK questionPK) {
-        this.questionPK = questionPK;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setRespondedQuestions(Set<RespondedQuestion> respondedQuestions) {
+        this.respondedQuestions = respondedQuestions;
     }
 
     public Survey getSurvey() {
@@ -102,16 +110,20 @@ public class Question implements Serializable {
         this.option5 = option5;
     }
 
+    public Set<RespondedQuestion> getRespondedQuestions() {
+        return respondedQuestions;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question = (Question) o;
-        return Objects.equals(questionPK, question.questionPK);
+        return Objects.equals(id, question.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(questionPK);
+        return Objects.hash(id);
     }
 }
