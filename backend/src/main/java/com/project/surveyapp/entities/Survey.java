@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_survey")
@@ -25,7 +23,7 @@ public class Survey implements Serializable {
     private Coordinator coordinator;
 
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
-    private Set<Question> questions = new HashSet<>();
+    private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "id.survey")
     private Set<RespondedSurvey> respondents = new HashSet<>();
@@ -33,12 +31,11 @@ public class Survey implements Serializable {
     public Survey() {
     }
 
-    public Survey(Long id, String title, LocalDate timeframe, Coordinator coordinator, Set<Question> questions) {
+    public Survey(Long id, String title, LocalDate timeframe, Coordinator coordinator) {
         this.id = id;
         this.title = title;
         this.timeframe = timeframe;
         this.coordinator = coordinator;
-        this.questions = questions;
     }
 
     public Long getId() {
@@ -73,8 +70,12 @@ public class Survey implements Serializable {
         this.coordinator = coordinator;
     }
 
-    public Set<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
+    }
+
+    public void addQuestions(List<Question> questions) {
+        this.questions.addAll(questions);
     }
 
     public Set<RespondedSurvey> getRespondents() {

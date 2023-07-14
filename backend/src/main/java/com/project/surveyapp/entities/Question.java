@@ -33,7 +33,8 @@ public class Question implements Serializable {
     public Question() {
     }
 
-    public Question(String text, String option1, String option2, String option3, String option4, String option5) {
+    public Question(Survey survey, String text, String option1, String option2, String option3, String option4, String option5) {
+        this.survey = survey;
         this.text = text;
         this.option1 = option1;
         this.option2 = option2;
@@ -48,10 +49,6 @@ public class Question implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public void setRespondedQuestions(Set<RespondedQuestion> respondedQuestions) {
-        this.respondedQuestions = respondedQuestions;
     }
 
     public Survey getSurvey() {
@@ -108,6 +105,10 @@ public class Question implements Serializable {
 
     public void setOption5(String option5) {
         this.option5 = option5;
+    }
+
+    public void setRespondedQuestions(Set<RespondedQuestion> respondedQuestions) {
+        this.respondedQuestions = respondedQuestions;
     }
 
     public Set<RespondedQuestion> getRespondedQuestions() {

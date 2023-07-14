@@ -5,10 +5,7 @@ import com.project.surveyapp.entities.pk.RespondedSurveyPK;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_responded_survey")
@@ -25,11 +22,10 @@ public class RespondedSurvey implements Serializable {
     public RespondedSurvey() {
     }
 
-    public RespondedSurvey(Respondent respondent, Survey survey, Date completionDate, Set<RespondedQuestion> respondedQuestions) {
+    public RespondedSurvey(Respondent respondent, Survey survey, Date completionDate) {
         this.id.setRespondent(respondent);
         this.id.setSurvey(survey);
         this.completionDate = completionDate;
-        this.respondedQuestions = respondedQuestions;
     }
 
     @JsonIgnore
@@ -59,6 +55,10 @@ public class RespondedSurvey implements Serializable {
 
     public Set<RespondedQuestion> getRespondedQuestions() {
         return respondedQuestions;
+    }
+
+    public void addRespondedQuestions(List<RespondedQuestion> respondedQuestions) {
+        this.respondedQuestions = new HashSet<>(respondedQuestions);
     }
 
     @Override

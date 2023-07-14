@@ -21,8 +21,9 @@ public class RespondedQuestion implements Serializable {
     public RespondedQuestion() {
     }
 
-    public RespondedQuestion(Question question, Integer optionSelected) {
+    public RespondedQuestion(Question question, RespondedSurvey respondedSurvey, Integer optionSelected) {
         this.id.setQuestion(question);
+        this.id.setRespondedSurvey(respondedSurvey);
         this.optionSelected = optionSelected;
     }
 

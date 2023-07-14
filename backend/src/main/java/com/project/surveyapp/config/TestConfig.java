@@ -37,26 +37,22 @@ public class TestConfig implements CommandLineRunner {
 
         coordinatorRepository.save(c1);
 
+        // surveys
+        Survey s1 = new Survey(null, "Survey 1", LocalDate.of(2023, 8, 13), c1);
+        Survey s2 = new Survey(null, "Survey 2", LocalDate.of(2023, 9, 13), c1);
+
         // questions
-        Question q1s1 = new Question("How much a dollar cost?",
+        Question q1s1 = new Question(s1, "How much a dollar cost?",
                 "1", "infinite", "everything", "too much", "nothing");
 
-        Question q2s1 = new Question("Where's North from here?",
+        Question q2s1 = new Question(s1, "Where's North from here?",
                 "left", "right", null, null, null);
 
-        Set<Question> s1Questions = new HashSet<>(Arrays.asList(q1s1, q2s1));
-
-        Question q1s2 = new Question("Look beyond the surface, don't just see what you wanna see?\n",
+        Question q1s2 = new Question(s2, "Look beyond the surface, don't just see what you wanna see?\n",
                 "yes", "no", "idk", null, null);
 
-        Set<Question> s2Questions = new HashSet<>(Arrays.asList(q1s1, q1s2));
-
-        // surveys
-        Survey s1 = new Survey(null, "Survey 1", LocalDate.of(2023, 8, 13), c1, s1Questions);
-        q1s1.setSurvey(s1);
-        q2s1.setSurvey(s1);
-        Survey s2 = new Survey(null, "Survey 2", LocalDate.of(2023, 9, 13), c1, s2Questions);
-        q1s2.setSurvey(s2);
+        s1.addQuestions(Arrays.asList(q1s1, q2s1));
+        s2.addQuestions(List.of(q1s2));
 
         surveyRepository.saveAll(Arrays.asList(s1, s2));
 
@@ -66,16 +62,15 @@ public class TestConfig implements CommandLineRunner {
 
         respondentRepository.saveAll(Arrays.asList(r1, r2));
 
-        // responded question
-        RespondedQuestion rq1 = new RespondedQuestion(q1s1, 4);
-        Set<RespondedQuestion> respondedQuestions = new HashSet<>(Arrays.asList(rq1));
-
         // responded
-        RespondedSurvey r1s1 = new RespondedSurvey(r1, s1, new Date(), respondedQuestions);
-        rq1.setRespondedSurvey(r1s1);
-        RespondedSurvey r1s2 = new RespondedSurvey(r1, s2, new Date(), null);
+        RespondedSurvey r1s1 = new RespondedSurvey(r1, s1, new Date());
+        RespondedSurvey r1s2 = new RespondedSurvey(r1, s2, new Date());
 
-        RespondedSurvey r2s1 = new RespondedSurvey(r2, s1, new Date(), null);
+        RespondedSurvey r2s1 = new RespondedSurvey(r2, s1, new Date());
+
+        // responded question
+        RespondedQuestion rq1 = new RespondedQuestion(q1s1, r1s1, 4);
+        r1s1.addRespondedQuestions(Arrays.asList(rq1));
 
         respondedSurveyRepository.saveAll(Arrays.asList(r1s1, r1s2, r2s1));
 
