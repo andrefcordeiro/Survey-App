@@ -1,6 +1,9 @@
 package com.project.surveyapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,14 +18,22 @@ public class Coordinator implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "name should not be empty")
     private String name;
 
+    @Column(unique = true)
+    @NotBlank(message = "email should not be empty")
+    @Email(message = "invalid email address")
     private String email;
 
+    @Column(unique = true)
+    @NotBlank(message = "username should not be empty")
     private String username;
 
+    @NotBlank(message = "password should not be empty")
     private String password;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "coordinator")
     private Set<Survey> surveys = new HashSet<>();
 
