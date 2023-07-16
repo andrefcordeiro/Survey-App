@@ -1,7 +1,6 @@
 package com.project.surveyapp.infra.security;
 
 import com.project.surveyapp.repositories.UserRepository;
-import com.project.surveyapp.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
