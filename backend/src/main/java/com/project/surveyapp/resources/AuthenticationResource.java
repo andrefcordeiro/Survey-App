@@ -2,8 +2,9 @@ package com.project.surveyapp.resources;
 
 import com.project.surveyapp.entities.User;
 import com.project.surveyapp.entities.dto.AuthenticationDTO;
+import com.project.surveyapp.entities.dto.LoginResponseDTO;
 import com.project.surveyapp.entities.dto.RegisterDTO;
-import com.project.surveyapp.repositories.UserRepository;
+import com.project.surveyapp.infra.security.TokenService;
 import com.project.surveyapp.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,17 @@ public class AuthenticationResource {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO authenticationDTO) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(authenticationDTO.username(), authenticationDTO.password());
         var auth = authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok().build();
+        var token = tokenService.generateToken((User) auth.getPrincipal());
+
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/register")

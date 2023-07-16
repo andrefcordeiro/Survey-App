@@ -93,7 +93,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.COORDINATOR) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        if(this.role == UserRole.COORDINATOR) return List.of(new SimpleGrantedAuthority("ROLE_COORDINATOR"));
         else return List.of(new SimpleGrantedAuthority("ROLE_RESPONDENT"));
     }
 

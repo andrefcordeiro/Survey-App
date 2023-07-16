@@ -1,5 +1,6 @@
 package com.project.surveyapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -18,13 +19,16 @@ public class Survey implements Serializable {
 
     private LocalDate timeframe;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "coordinator_id")
     private Coordinator coordinator;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.survey")
     private Set<RespondedSurvey> respondents = new HashSet<>();
 
