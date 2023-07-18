@@ -1,3 +1,3 @@
-package com.project.surveyapp.entities.dto;
+package com.project.surveyapp.dto;
 
 public record AuthenticationDTO(String username, String password){}

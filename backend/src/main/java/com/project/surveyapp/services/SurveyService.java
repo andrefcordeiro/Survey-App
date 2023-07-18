@@ -1,12 +1,16 @@
 package com.project.surveyapp.services;
 
+import com.project.surveyapp.dto.QuestionDTO;
 import com.project.surveyapp.entities.Coordinator;
 import com.project.surveyapp.entities.Question;
 import com.project.surveyapp.entities.Survey;
-import com.project.surveyapp.entities.dto.SurveyQuestionsDTO;
+import com.project.surveyapp.dto.SurveyDTO;
+import com.project.surveyapp.repositories.QuestionRepository;
 import com.project.surveyapp.repositories.SurveyRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,19 +20,37 @@ public class SurveyService {
     @Autowired
     private SurveyRepository surveyRepository;
 
-    public List<Survey> findAll() {
-        return surveyRepository.findAll();
+    @Autowired
+    private QuestionRepository questionRepository;
+
+    @Transactional(readOnly = true)
+    public List<SurveyDTO> findAll() {
+        List<Survey> surveys = surveyRepository.findAll();
+        return surveys.stream().map(SurveyDTO::new).toList();
     }
 
-    public void createSurvey(SurveyQuestionsDTO surveyQuestionsDTO){
+    public void createSurvey(SurveyDTO surveyDTO) {
         Coordinator c = new Coordinator();
-        c.setId(surveyQuestionsDTO.coordinatorId());
+        c.setId(surveyDTO.getCoordinatorId());
 
-        Survey survey = new Survey(null, surveyQuestionsDTO.title(), surveyQuestionsDTO.timeframe(), c);
-        for (Question q : surveyQuestionsDTO.questions()){
+        Survey survey = new Survey(null, surveyDTO.getTitle(), surveyDTO.getTimeframe(), c);
+        for (QuestionDTO questionDTO : surveyDTO.getQuestions()){
+            Question q = new Question();
+            BeanUtils.copyProperties(questionDTO, q);
             survey.addQuestion(q);
         }
 
         surveyRepository.save(survey);
+    }
+
+    @Transactional(readOnly = true)
+    public List<SurveyDTO> searchByCoordinator(Long id) {
+        List<SurveyDTO> surveys = surveyRepository.searchByCoordinator(id);
+
+        for (SurveyDTO s : surveys) {
+            List<QuestionDTO> questions = questionRepository.searchQuestionsBySurveyId(s.getId());
+            s.setQuestions(questions);
+        }
+        return surveys;
     }
 }

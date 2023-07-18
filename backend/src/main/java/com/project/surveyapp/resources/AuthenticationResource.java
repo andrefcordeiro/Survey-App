@@ -1,9 +1,9 @@
 package com.project.surveyapp.resources;
 
 import com.project.surveyapp.entities.User;
-import com.project.surveyapp.entities.dto.AuthenticationDTO;
-import com.project.surveyapp.entities.dto.LoginResponseDTO;
-import com.project.surveyapp.entities.dto.RegisterDTO;
+import com.project.surveyapp.dto.AuthenticationDTO;
+import com.project.surveyapp.dto.LoginResponseDTO;
+import com.project.surveyapp.dto.RegisterDTO;
 import com.project.surveyapp.infra.security.TokenService;
 import com.project.surveyapp.services.UserService;
 import jakarta.validation.Valid;

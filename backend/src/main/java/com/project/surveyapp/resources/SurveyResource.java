@@ -1,7 +1,6 @@
 package com.project.surveyapp.resources;
 
-import com.project.surveyapp.entities.Survey;
-import com.project.surveyapp.entities.dto.SurveyQuestionsDTO;
+import com.project.surveyapp.dto.SurveyDTO;
 import com.project.surveyapp.services.SurveyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +17,20 @@ public class SurveyResource {
     private SurveyService surveyService;
 
     @GetMapping
-    public ResponseEntity<List<Survey>> findAll() {
-        List<Survey> list = surveyService.findAll();
+    public ResponseEntity<List<SurveyDTO>> findAll() {
+        List<SurveyDTO> list = surveyService.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @PostMapping
-    public ResponseEntity createSurvey(@RequestBody @Valid SurveyQuestionsDTO surveyQuestionsDTO) {
-
-        surveyService.createSurvey(surveyQuestionsDTO);
-
+    public ResponseEntity createSurvey(@RequestBody @Valid SurveyDTO surveyDTO) {
+        surveyService.createSurvey(surveyDTO);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(params = "coordinator")
+    public ResponseEntity<List<SurveyDTO>> findByCoordinator(@Valid @RequestParam("coordinator") Long id) {
+        List<SurveyDTO> list = surveyService.searchByCoordinator(id);
+        return ResponseEntity.ok().body(list);
     }
 }

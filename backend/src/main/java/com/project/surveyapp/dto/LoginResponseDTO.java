@@ -1,4 +1,4 @@
-package com.project.surveyapp.entities.dto;
+package com.project.surveyapp.dto;
 
 public record LoginResponseDTO(String token) {
 }
