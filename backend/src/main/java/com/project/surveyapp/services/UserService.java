@@ -1,7 +1,6 @@
 package com.project.surveyapp.services;
 
 import com.project.surveyapp.entities.Coordinator;
-import com.project.surveyapp.entities.RespondedSurvey;
 import com.project.surveyapp.entities.Respondent;
 import com.project.surveyapp.entities.User;
 import com.project.surveyapp.entities.enums.UserRole;
@@ -10,7 +9,6 @@ import com.project.surveyapp.repositories.RespondentRepository;
 import com.project.surveyapp.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,5 +1,7 @@
 package com.project.surveyapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.surveyapp.entities.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -13,6 +15,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+@JsonIgnoreProperties(value = { "name", "email", "password", "role"})
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "tb_users")
@@ -91,27 +94,32 @@ public class User implements Serializable, UserDetails {
         this.password = password;
     }
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == UserRole.COORDINATOR) return List.of(new SimpleGrantedAuthority("ROLE_COORDINATOR"));
         else return List.of(new SimpleGrantedAuthority("ROLE_RESPONDENT"));
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;

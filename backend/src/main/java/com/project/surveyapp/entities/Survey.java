@@ -2,6 +2,7 @@ package com.project.surveyapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.data.domain.Persistable;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -9,7 +10,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "tb_survey")
-public class Survey implements Serializable {
+public class Survey implements Serializable, Persistable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,13 +20,11 @@ public class Survey implements Serializable {
 
     private LocalDate timeframe;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "coordinator_id")
     private Coordinator coordinator;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 
     @JsonIgnore
@@ -78,8 +77,14 @@ public class Survey implements Serializable {
         return questions;
     }
 
-    public void addQuestions(List<Question> questions) {
-        this.questions.addAll(questions);
+    public void addQuestion(Question question){
+        questions.add(question);
+        question.setSurvey(this);
+    }
+
+    public void removeQuestion(Question question){
+        questions.remove(question);
+        question.setSurvey(null);
     }
 
     public Set<RespondedSurvey> getRespondents() {
@@ -97,5 +102,12 @@ public class Survey implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isNew() {
+        return null == getId() &&
+                coordinator.getId() == null;
     }
 }
