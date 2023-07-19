@@ -11,7 +11,7 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
 	@Query("""
 			SELECT new com.project.surveyapp.dto.SurveyDTO(survey.id, survey.title, 
-			survey.timeframe, coord.id, user.username)
+			survey.timeframe, survey.creationDate, coord.id, user.username)
 			FROM Survey survey
 			INNER JOIN Coordinator coord ON survey.coordinator.id = coord.id
 			INNER JOIN User user ON user.id = coord.id

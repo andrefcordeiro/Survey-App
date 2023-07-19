@@ -1,10 +1,12 @@
 package com.project.surveyapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.data.domain.Persistable;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -20,6 +22,9 @@ public class Survey implements Serializable, Persistable<Long> {
 
     private LocalDate timeframe;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+    private Instant creationDate;
+
     @ManyToOne
     @JoinColumn(name = "coordinator_id")
     private Coordinator coordinator;
@@ -34,10 +39,11 @@ public class Survey implements Serializable, Persistable<Long> {
     public Survey() {
     }
 
-    public Survey(Long id, String title, LocalDate timeframe, Coordinator coordinator) {
+    public Survey(Long id, String title, LocalDate timeframe, Instant creationDate, Coordinator coordinator) {
         this.id = id;
         this.title = title;
         this.timeframe = timeframe;
+        this.creationDate = creationDate;
         this.coordinator = coordinator;
     }
 
@@ -63,6 +69,14 @@ public class Survey implements Serializable, Persistable<Long> {
 
     public void setTimeframe(LocalDate timeframe) {
         this.timeframe = timeframe;
+    }
+
+    public Instant getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Instant creationDate) {
+        this.creationDate = creationDate;
     }
 
     public Coordinator getCoordinator() {

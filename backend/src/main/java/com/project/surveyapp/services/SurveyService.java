@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -33,7 +34,7 @@ public class SurveyService {
         Coordinator c = new Coordinator();
         c.setId(surveyDTO.getCoordinatorId());
 
-        Survey survey = new Survey(null, surveyDTO.getTitle(), surveyDTO.getTimeframe(), c);
+        Survey survey = new Survey(null, surveyDTO.getTitle(), surveyDTO.getTimeframe(), Instant.now(), c);
         for (QuestionDTO questionDTO : surveyDTO.getQuestions()){
             Question q = new Question();
             BeanUtils.copyProperties(questionDTO, q);

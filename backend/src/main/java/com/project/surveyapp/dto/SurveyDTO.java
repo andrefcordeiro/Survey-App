@@ -1,7 +1,9 @@
 package com.project.surveyapp.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.surveyapp.entities.Survey;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,16 +15,20 @@ public class SurveyDTO {
 
     private LocalDate timeframe;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+    private Instant creationDate;
+
     private Long coordinatorId;
 
     private String coordinatorUsername;
 
     private List<QuestionDTO> questions;
 
-    public SurveyDTO(Long id, String title, LocalDate timeframe, Long coordinatorId, String coordinatorUsername) {
+    public SurveyDTO(Long id, String title, LocalDate timeframe, Instant creationDate, Long coordinatorId, String coordinatorUsername) {
         this.id = id;
         this.title = title;
         this.timeframe = timeframe;
+        this.creationDate = creationDate;
         this.coordinatorId = coordinatorId;
         this.coordinatorUsername = coordinatorUsername;
     }
@@ -31,6 +37,7 @@ public class SurveyDTO {
         this.id = survey.getId();
         this.title = survey.getTitle();
         this.timeframe = survey.getTimeframe();
+        this.creationDate = survey.getCreationDate();
         this.coordinatorId = survey.getCoordinator().getId();
         this.coordinatorUsername = survey.getCoordinator().getUsername();
         this.questions = survey.getQuestions().stream().map(QuestionDTO::new).toList();
@@ -59,6 +66,15 @@ public class SurveyDTO {
     public void setTimeframe(LocalDate timeframe) {
         this.timeframe = timeframe;
     }
+
+    public Instant getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Instant creationDate) {
+        this.creationDate = creationDate;
+    }
+
 
     public Long getCoordinatorId() {
         return coordinatorId;
