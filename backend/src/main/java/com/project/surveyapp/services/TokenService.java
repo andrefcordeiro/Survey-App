@@ -1,4 +1,4 @@
-package com.project.surveyapp.infra.security;
+package com.project.surveyapp.services;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

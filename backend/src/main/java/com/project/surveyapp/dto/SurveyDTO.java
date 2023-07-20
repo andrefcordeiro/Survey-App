@@ -2,6 +2,10 @@ package com.project.surveyapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.surveyapp.entities.Survey;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -11,17 +15,23 @@ public class SurveyDTO {
 
     private Long id;
 
+    @NotBlank(message = "title should not be empty")
     private String title;
 
+    @NotNull(message = "timeframe should not be empty")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate timeframe;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant creationDate;
 
+    @NotNull(message = "coordinatorId should not be empty")
     private Long coordinatorId;
 
     private String coordinatorUsername;
 
+    @Valid
+    @NotEmpty(message = "questions should not be empty")
     private List<QuestionDTO> questions;
 
     public SurveyDTO(Long id, String title, LocalDate timeframe, Instant creationDate, Long coordinatorId, String coordinatorUsername) {
@@ -31,6 +41,7 @@ public class SurveyDTO {
         this.creationDate = creationDate;
         this.coordinatorId = coordinatorId;
         this.coordinatorUsername = coordinatorUsername;
+        this.questions = null;
     }
 
     public SurveyDTO(Survey survey) {

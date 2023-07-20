@@ -1,21 +1,28 @@
 package com.project.surveyapp.dto;
 
 import com.project.surveyapp.entities.Question;
+import jakarta.validation.constraints.NotBlank;
 
 public class QuestionDTO {
 
    private Long id;
 
+   @NotBlank(message = "question text should not be empty")
    private String text;
 
+   @NotBlank(message = "question option1 should not be empty")
    private String option1;
 
+   @NotBlank(message = "question option2 should not be empty")
    private String option2;
 
+   @NotBlank(message = "question option3 should not be empty")
    private String option3;
 
+   @NotBlank(message = "question option4 should not be empty")
    private String option4;
 
+   @NotBlank(message = "question option5 should not be empty")
    private String option5;
 
    public QuestionDTO(Long id, String text, String option1, String option2, String option3, String option4, String option5) {
