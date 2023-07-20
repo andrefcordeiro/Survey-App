@@ -1,4 +1,4 @@
-package com.project.surveyapp.infra.security;
+package com.project.surveyapp.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

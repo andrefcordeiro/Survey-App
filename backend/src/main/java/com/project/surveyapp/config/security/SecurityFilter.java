@@ -1,6 +1,7 @@
-package com.project.surveyapp.infra.security;
+package com.project.surveyapp.config.security;
 
 import com.project.surveyapp.repositories.UserRepository;
+import com.project.surveyapp.services.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
