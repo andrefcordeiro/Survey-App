@@ -3,7 +3,6 @@ package com.project.surveyapp.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.springframework.data.domain.Persistable;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -12,7 +11,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "tb_survey")
-public class Survey implements Serializable, Persistable<Long> {
+public class Survey implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -116,12 +115,5 @@ public class Survey implements Serializable, Persistable<Long> {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isNew() {
-        return null == getId() &&
-                coordinator.getId() == null;
     }
 }
