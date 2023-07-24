@@ -30,7 +30,7 @@ public class Question implements Serializable {
     private String option5;
 
     @OneToMany(mappedBy = "id.question")
-    private Set<RespondedQuestion> respondedQuestions = new HashSet<>();
+    private Set<QuestionResponse> questionResponses = new HashSet<>();
 
     public Question() {
     }
@@ -109,12 +109,12 @@ public class Question implements Serializable {
         this.option5 = option5;
     }
 
-    public void setRespondedQuestions(Set<RespondedQuestion> respondedQuestions) {
-        this.respondedQuestions = respondedQuestions;
+    public void setQuestionResponses(Set<QuestionResponse> questionResponses) {
+        this.questionResponses = questionResponses;
     }
 
-    public Set<RespondedQuestion> getRespondedQuestions() {
-        return respondedQuestions;
+    public Set<QuestionResponse> getQuestionResponses() {
+        return questionResponses;
     }
 
     @Override

@@ -33,9 +33,13 @@ public class Survey implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "id.survey")
-    private Set<RespondedSurvey> respondents = new HashSet<>();
+    private Set<SurveyResponse> respondents = new HashSet<>();
 
     public Survey() {
+    }
+
+    public Survey(Long id) {
+        this.id = id;
     }
 
     public Survey(Long id, String title, LocalDate timeframe, Instant creationDate, Coordinator coordinator) {
@@ -100,7 +104,7 @@ public class Survey implements Serializable {
         question.setSurvey(null);
     }
 
-    public Set<RespondedSurvey> getRespondents() {
+    public Set<SurveyResponse> getRespondents() {
         return respondents;
     }
 

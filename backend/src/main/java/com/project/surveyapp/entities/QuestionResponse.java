@@ -1,7 +1,7 @@
 package com.project.surveyapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.surveyapp.entities.pk.RespondedQuestionPK;
+import com.project.surveyapp.entities.pk.QuestionResponsePK;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -10,30 +10,30 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_responded_question")
-public class RespondedQuestion implements Serializable {
+@Table(name = "tb_question_response")
+public class QuestionResponse implements Serializable {
 
     @EmbeddedId
-    private RespondedQuestionPK id = new RespondedQuestionPK();
+    private QuestionResponsePK id = new QuestionResponsePK();
 
     private Integer optionSelected;
 
-    public RespondedQuestion() {
+    public QuestionResponse() {
     }
 
-    public RespondedQuestion(Question question, RespondedSurvey respondedSurvey, Integer optionSelected) {
+    public QuestionResponse(Question question, SurveyResponse surveyResponse, Integer optionSelected) {
         this.id.setQuestion(question);
-        this.id.setRespondedSurvey(respondedSurvey);
+        this.id.setSurveyResponse(surveyResponse);
         this.optionSelected = optionSelected;
     }
 
     @JsonIgnore
-    public RespondedSurvey getRespondedSurvey() {
-        return this.id.getRespondedSurvey();
+    public SurveyResponse getSurveyResponse() {
+        return this.id.getSurveyResponse();
     }
 
-    public void setRespondedSurvey(RespondedSurvey respondedSurvey) {
-        this.id.setRespondedSurvey(respondedSurvey);
+    public void setSurveyResponse(SurveyResponse surveyResponse) {
+        this.id.setSurveyResponse(surveyResponse);
     }
 
     public Question getQuestion() {
@@ -56,7 +56,7 @@ public class RespondedQuestion implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RespondedQuestion that = (RespondedQuestion) o;
+        QuestionResponse that = (QuestionResponse) o;
         return Objects.equals(id, that.id);
     }
 

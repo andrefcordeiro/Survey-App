@@ -1,28 +1,31 @@
 package com.project.surveyapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.surveyapp.entities.pk.RespondedSurveyPK;
+import com.project.surveyapp.entities.pk.SurveyResponsePK;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.*;
 
 @Entity
-@Table(name = "tb_responded_survey")
-public class RespondedSurvey implements Serializable {
+@Table(name = "tb_survey_response")
+public class SurveyResponse implements Serializable {
 
     @EmbeddedId
-    private RespondedSurveyPK id = new RespondedSurveyPK();
+    private SurveyResponsePK id = new SurveyResponsePK();
 
-    private Date completionDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+    private Instant completionDate;
 
-    @OneToMany(mappedBy = "id.respondedSurvey", cascade = CascadeType.ALL)
-    private Set<RespondedQuestion> respondedQuestions = new HashSet<>();
+    @OneToMany(mappedBy = "id.surveyResponse", cascade = CascadeType.ALL)
+    private Set<QuestionResponse> questionsResponses = new HashSet<>();
 
-    public RespondedSurvey() {
+    public SurveyResponse() {
     }
 
-    public RespondedSurvey(Respondent respondent, Survey survey, Date completionDate) {
+    public SurveyResponse(Respondent respondent, Survey survey, Instant completionDate) {
         this.id.setRespondent(respondent);
         this.id.setSurvey(survey);
         this.completionDate = completionDate;
@@ -45,27 +48,27 @@ public class RespondedSurvey implements Serializable {
         this.id.setSurvey(survey);
     }
 
-    public Date getCompletionDate() {
+    public Instant getCompletionDate() {
         return completionDate;
     }
 
-    public void setCompletionDate(Date completionDate) {
+    public void setCompletionDate(Instant completionDate) {
         this.completionDate = completionDate;
     }
 
-    public Set<RespondedQuestion> getRespondedQuestions() {
-        return respondedQuestions;
+    public Set<QuestionResponse> getRespondedQuestions() {
+        return questionsResponses;
     }
 
-    public void addRespondedQuestions(List<RespondedQuestion> respondedQuestions) {
-        this.respondedQuestions = new HashSet<>(respondedQuestions);
+    public void addRespondedQuestions(List<QuestionResponse> questionsResponses) {
+        this.questionsResponses = new HashSet<>(questionsResponses);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RespondedSurvey that = (RespondedSurvey) o;
+        SurveyResponse that = (SurveyResponse) o;
         return Objects.equals(id, that.id);
     }
 

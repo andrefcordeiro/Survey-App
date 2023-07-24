@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class RespondedSurveyPK implements Serializable {
+public class SurveyResponsePK implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "respondent_id")
@@ -40,7 +40,7 @@ public class RespondedSurveyPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RespondedSurveyPK that = (RespondedSurveyPK) o;
+        SurveyResponsePK that = (SurveyResponsePK) o;
         return Objects.equals(respondent, that.respondent) && Objects.equals(survey, that.survey);
     }
 

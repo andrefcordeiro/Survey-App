@@ -11,16 +11,20 @@ import java.util.Set;
 public class Respondent extends User {
 
     @OneToMany(mappedBy = "id.respondent")
-    private Set<RespondedSurvey> respondedSurveys = new HashSet<>();
+    private Set<SurveyResponse> surveysResponses = new HashSet<>();
 
     public Respondent() {
+    }
+
+    public Respondent(Long id) {
+        super.setId(id);
     }
 
     public Respondent(Long id, String name, String email, String username, String password) {
         super(id, name, email, username, password, UserRole.RESPONDENT);
     }
 
-    public Set<RespondedSurvey> getRespondedSurveys() {
-        return respondedSurveys;
+    public Set<SurveyResponse> getSurveysResponses() {
+        return surveysResponses;
     }
 }
