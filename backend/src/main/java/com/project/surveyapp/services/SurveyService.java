@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SurveyService {
@@ -30,7 +31,7 @@ public class SurveyService {
         return surveys.stream().map(SurveyDTO::new).toList();
     }
 
-    public void createSurvey(SurveyDTO surveyDTO) {
+    public SurveyDTO createSurvey(SurveyDTO surveyDTO) {
         Coordinator c = new Coordinator();
         c.setId(surveyDTO.getCoordinatorId());
 
@@ -41,7 +42,7 @@ public class SurveyService {
             survey.addQuestion(q);
         }
 
-        surveyRepository.save(survey);
+        return new SurveyDTO(surveyRepository.save(survey));
     }
 
     @Transactional(readOnly = true)

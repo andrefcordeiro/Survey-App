@@ -1,12 +1,15 @@
 package com.project.surveyapp.resources;
 
 import com.project.surveyapp.dto.SurveyDTO;
+import com.project.surveyapp.entities.Survey;
 import com.project.surveyapp.services.SurveyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -24,8 +27,14 @@ public class SurveyResource {
 
     @PostMapping
     public ResponseEntity createSurvey(@RequestBody @Valid SurveyDTO surveyDTO) {
-        surveyService.createSurvey(surveyDTO);
-        return ResponseEntity.ok().build();
+        SurveyDTO s = surveyService.createSurvey(surveyDTO);
+        URI uri =
+                ServletUriComponentsBuilder.fromCurrentRequest()
+                        .path("/{id}")
+                        .buildAndExpand(s.getId())
+                        .toUri();
+
+        return ResponseEntity.created(uri).body(s);
     }
 
     @GetMapping(params = "coordinator")

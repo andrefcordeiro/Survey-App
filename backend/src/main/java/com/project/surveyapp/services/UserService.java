@@ -31,17 +31,17 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    public void createUser(User user) {
+    public User createUser(User user) {
 
         if (user.getRole().equals(UserRole.COORDINATOR)){
             Coordinator c = new Coordinator();
             BeanUtils.copyProperties(user, c);
-            coordinatorRepository.save(c);
+            return coordinatorRepository.save(c);
 
         } else {
             Respondent r = new Respondent();
             BeanUtils.copyProperties(user, r);
-            respondentRepository.save(r);
+            return respondentRepository.save(r);
         }
     }
 }

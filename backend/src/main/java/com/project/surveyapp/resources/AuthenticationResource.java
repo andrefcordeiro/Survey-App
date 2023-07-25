@@ -13,6 +13,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/auth")
@@ -40,11 +43,16 @@ public class AuthenticationResource {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO registerDTO) {
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.password());
-        User newUser = new User(null, registerDTO.name(), registerDTO.email(), registerDTO.username(), encryptedPassword, registerDTO.role());
+        User newUser = new User(null, registerDTO.name(), registerDTO.email(), registerDTO.username(),
+                encryptedPassword, registerDTO.role());
 
-        userService.createUser(newUser);
+        User u = userService.createUser(newUser);
+        URI uri =
+                ServletUriComponentsBuilder.fromCurrentRequest()
+                        .path("/{id}")
+                        .buildAndExpand(u.getId())
+                        .toUri();
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.created(uri).body(u);
     }
-
 }
