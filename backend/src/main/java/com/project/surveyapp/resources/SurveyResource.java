@@ -1,5 +1,6 @@
 package com.project.surveyapp.resources;
 
+import com.project.surveyapp.dto.QuestionDTO;
 import com.project.surveyapp.dto.SurveyDTO;
 import com.project.surveyapp.entities.Survey;
 import com.project.surveyapp.services.SurveyService;

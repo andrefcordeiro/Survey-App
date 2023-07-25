@@ -14,45 +14,51 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SurveyService {
 
-    @Autowired
-    private SurveyRepository surveyRepository;
+  @Autowired private SurveyRepository surveyRepository;
 
-    @Autowired
-    private QuestionRepository questionRepository;
+  @Autowired private QuestionRepository questionRepository;
 
-    @Transactional(readOnly = true)
-    public List<SurveyDTO> findAll() {
-        List<Survey> surveys = surveyRepository.findAll();
-        return surveys.stream().map(SurveyDTO::new).toList();
+  @Transactional(readOnly = true)
+  public List<SurveyDTO> findAll() {
+    List<Survey> surveys = surveyRepository.findAll();
+    return surveys.stream().map(SurveyDTO::new).toList();
+  }
+
+  public SurveyDTO createSurvey(SurveyDTO surveyDTO) {
+    Coordinator c = new Coordinator();
+    c.setId(surveyDTO.getCoordinatorId());
+
+    Survey survey =
+        new Survey(null, surveyDTO.getTitle(), surveyDTO.getTimeframe(), Instant.now(), c);
+
+    for (QuestionDTO qDTO : surveyDTO.getQuestions()) {
+      Question q =
+          new Question(
+              null,
+              qDTO.getText(),
+              qDTO.getOptions().get(0),
+              qDTO.getOptions().get(1),
+              qDTO.getOptions().get(2),
+              qDTO.getOptions().get(3),
+              qDTO.getOptions().get(4));
+      survey.addQuestion(q);
     }
 
-    public SurveyDTO createSurvey(SurveyDTO surveyDTO) {
-        Coordinator c = new Coordinator();
-        c.setId(surveyDTO.getCoordinatorId());
+    return new SurveyDTO(surveyRepository.save(survey));
+  }
 
-        Survey survey = new Survey(null, surveyDTO.getTitle(), surveyDTO.getTimeframe(), Instant.now(), c);
-        for (QuestionDTO questionDTO : surveyDTO.getQuestions()){
-            Question q = new Question();
-            BeanUtils.copyProperties(questionDTO, q);
-            survey.addQuestion(q);
-        }
+  @Transactional(readOnly = true)
+  public List<SurveyDTO> searchByCoordinator(Long id) {
+    List<SurveyDTO> surveys = surveyRepository.searchByCoordinator(id);
 
-        return new SurveyDTO(surveyRepository.save(survey));
+    for (SurveyDTO s : surveys) {
+      List<QuestionDTO> questions = questionRepository.searchQuestionsBySurveyId(s.getId());
+      s.setQuestions(questions);
     }
-
-    @Transactional(readOnly = true)
-    public List<SurveyDTO> searchByCoordinator(Long id) {
-        List<SurveyDTO> surveys = surveyRepository.searchByCoordinator(id);
-
-        for (SurveyDTO s : surveys) {
-            List<QuestionDTO> questions = questionRepository.searchQuestionsBySurveyId(s.getId());
-            s.setQuestions(questions);
-        }
-        return surveys;
-    }
+    return surveys;
+  }
 }
