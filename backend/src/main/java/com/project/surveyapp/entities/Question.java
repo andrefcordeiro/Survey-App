@@ -35,6 +35,10 @@ public class Question implements Serializable {
     public Question() {
     }
 
+    public Question(Long id) {
+        this.id = id;
+    }
+
     public Question(Survey survey, String text, String option1, String option2, String option3, String option4, String option5) {
         this.survey = survey;
         this.text = text;
