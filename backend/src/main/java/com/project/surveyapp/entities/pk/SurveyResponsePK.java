@@ -20,6 +20,14 @@ public class SurveyResponsePK implements Serializable {
     @JoinColumn(name = "survey_id")
     private Survey survey;
 
+    public SurveyResponsePK() {
+    }
+
+    public SurveyResponsePK(Respondent respondent, Survey survey) {
+        this.respondent = respondent;
+        this.survey = survey;
+    }
+
     public Respondent getRespondent() {
         return respondent;
     }

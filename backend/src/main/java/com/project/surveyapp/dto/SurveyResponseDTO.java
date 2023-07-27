@@ -9,7 +9,8 @@ import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class SurveyResponseDTO implements Serializable {
@@ -24,7 +25,7 @@ public class SurveyResponseDTO implements Serializable {
 
     @Valid
     @NotEmpty(message = "questionsResponses should not be empty")
-    private Set<QuestionResponse> questionsResponses = new HashSet<>();
+    private Set<QuestionResponse> questionsResponses = new LinkedHashSet<>();
 
     public SurveyResponseDTO() {
     }
@@ -56,6 +57,19 @@ public class SurveyResponseDTO implements Serializable {
 
         public void setOptionSelected(Integer optionSelected) {
             this.optionSelected = optionSelected;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            QuestionResponse that = (QuestionResponse) o;
+            return Objects.equals(questionId, that.questionId);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(questionId);
         }
     }
 
@@ -89,5 +103,18 @@ public class SurveyResponseDTO implements Serializable {
 
     public void setQuestionsResponses(Set<QuestionResponse> questionsResponses) {
         this.questionsResponses = questionsResponses;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SurveyResponseDTO that = (SurveyResponseDTO) o;
+        return Objects.equals(respondentId, that.respondentId) && Objects.equals(surveyId, that.surveyId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(respondentId, surveyId);
     }
 }

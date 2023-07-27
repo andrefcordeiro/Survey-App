@@ -1,13 +1,19 @@
 package com.project.surveyapp.services;
 
+import com.project.surveyapp.dto.QuestionDTO;
 import com.project.surveyapp.dto.SurveyResponseDTO;
 import com.project.surveyapp.entities.*;
+import com.project.surveyapp.entities.pk.SurveyResponsePK;
+import com.project.surveyapp.repositories.QuestionRepository;
 import com.project.surveyapp.repositories.QuestionResponseRepository;
 import com.project.surveyapp.repositories.SurveyResponseRepository;
+import com.project.surveyapp.services.exceptions.InvalidSurveyResponseException;
+import com.project.surveyapp.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.*;
 
 @Service
 public class SurveyResponseService {
@@ -18,31 +24,59 @@ public class SurveyResponseService {
     @Autowired
     private QuestionResponseRepository questionResponseRepository;
 
-    // TODO
-    private boolean isValidSurveyResponse(){
-        // verificar se o respondent existe
+    @Autowired
+    private QuestionRepository questionRepository;
 
-        // verificar se a survey existe
+    private SurveyResponse validateSurveyResponse(SurveyResponseDTO surveyResponseDTO) {
+        Long surveyId = surveyResponseDTO.getSurveyId();
 
-        // verificar se todas as perguntas forma respondidas
+        // verificando se a survey existe
+        List<QuestionDTO> questions = questionRepository.searchQuestionsBySurveyId(surveyId);
+        if (questions.isEmpty())
+            throw new ResourceNotFoundException(surveyId);
 
-        // verificar se as opções selecionadas são validas
-
-        return true;
-    }
-
-    public SurveyResponseDTO submitSurvey(SurveyResponseDTO surveyResponseDTO) {
+        // verificando se o respondent já preencheu está survey
         surveyResponseDTO.setCompletionDate(Instant.now());
         Respondent r = new Respondent(surveyResponseDTO.getRespondentId());
         Survey s = new Survey(surveyResponseDTO.getSurveyId());
 
-        SurveyResponse rs = new SurveyResponse(r, s, surveyResponseDTO.getCompletionDate());
-        surveyResponseRepository.save(rs);
+        if (surveyResponseRepository.existsById(new SurveyResponsePK(r, s)))
+            throw new InvalidSurveyResponseException("Respondent with id " + r.getId() +
+                    " has already submitted a response to survey with id " + s.getId() + ".");
 
-        for (SurveyResponseDTO.QuestionResponse qrDTO:
-        surveyResponseDTO.getQuestionsResponses()) {
+        // verificar se todas as perguntas foram respondidas
+        if (surveyResponseDTO.getQuestionsResponses().size() != questions.size())
+            throw new InvalidSurveyResponseException("Wrong number of responses to questions for survey with id "
+                    + surveyId + ". It should be " + questions.size() +
+                    " but got " + surveyResponseDTO.getQuestionsResponses().size() + " instead.");
+
+        // verificar se as opções selecionadas são validas
+        Iterator<QuestionDTO> questionsIt = questions.iterator();
+        Iterator<SurveyResponseDTO.QuestionResponse> questionsResponsesIt =
+                surveyResponseDTO.getQuestionsResponses().iterator();
+
+        while (questionsIt.hasNext() && questionsResponsesIt.hasNext()) {
+            QuestionDTO q = questionsIt.next();
+            Integer optionSelected = questionsResponsesIt.next().getOptionSelected();
+
+            // se a opção selecionada está entre as disponíveis
+            if (optionSelected > q.getOptions().size()) {
+                throw new InvalidSurveyResponseException("The value " + optionSelected
+                        + " is not a valid option for question with id " + q.getId() + ".");
+            }
+        }
+
+        return new SurveyResponse(r, s, surveyResponseDTO.getCompletionDate());
+    }
+
+    public SurveyResponseDTO submitSurvey(SurveyResponseDTO surveyResponseDTO) {
+        SurveyResponse sr = validateSurveyResponse(surveyResponseDTO);
+        surveyResponseRepository.save(sr);
+
+        for (SurveyResponseDTO.QuestionResponse qrDTO :
+                surveyResponseDTO.getQuestionsResponses()) {
             Question q = new Question(qrDTO.getQuestionId());
-            QuestionResponse qr = new QuestionResponse(q, rs, qrDTO.getOptionSelected());
+            QuestionResponse qr = new QuestionResponse(q, sr, qrDTO.getOptionSelected());
             questionResponseRepository.save(qr);
         }
 

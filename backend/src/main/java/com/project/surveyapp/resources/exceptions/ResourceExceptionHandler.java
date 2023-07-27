@@ -1,6 +1,7 @@
 package com.project.surveyapp.resources.exceptions;
 
 import com.project.surveyapp.services.exceptions.DatabaseException;
+import com.project.surveyapp.services.exceptions.InvalidSurveyResponseException;
 import com.project.surveyapp.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -65,6 +66,16 @@ public class ResourceExceptionHandler {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         StandardError err = new StandardError(
                         Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(InvalidSurveyResponseException.class)
+    public ResponseEntity<StandardError> invalidSurveyResponse(InvalidSurveyResponseException e, HttpServletRequest request) {
+        String error = "Invalid survey response";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(
+                Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
 
         return ResponseEntity.status(status).body(err);
     }
