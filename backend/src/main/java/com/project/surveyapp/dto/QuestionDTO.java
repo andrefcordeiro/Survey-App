@@ -19,6 +19,9 @@ public class QuestionDTO {
     @NotEmpty(message = "question options should not be empty")
     private List<String> options;
 
+    public QuestionDTO() {
+    }
+
     public QuestionDTO(Long id, String text, List<String> options) {
         this.id = id;
         this.text = text;

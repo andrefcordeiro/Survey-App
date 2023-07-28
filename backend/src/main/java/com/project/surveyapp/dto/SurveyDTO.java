@@ -26,7 +26,6 @@ public class SurveyDTO implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant creationDate;
 
-    @NotNull(message = "coordinatorId should not be empty")
     private Long coordinatorId;
 
     private String coordinatorUsername;

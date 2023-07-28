@@ -15,7 +15,6 @@ import java.util.Set;
 
 public class SurveyResponseDTO implements Serializable {
 
-    @NotNull(message = "respondentId should not be empty")
     private Long respondentId;
 
     private Long surveyId;

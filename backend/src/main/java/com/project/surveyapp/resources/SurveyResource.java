@@ -1,12 +1,13 @@
 package com.project.surveyapp.resources;
 
-import com.project.surveyapp.dto.QuestionDTO;
 import com.project.surveyapp.dto.SurveyDTO;
-import com.project.surveyapp.entities.Survey;
+import com.project.surveyapp.entities.User;
 import com.project.surveyapp.services.SurveyService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,7 +28,10 @@ public class SurveyResource {
     }
 
     @PostMapping
-    public ResponseEntity createSurvey(@RequestBody @Valid SurveyDTO surveyDTO) {
+    public ResponseEntity createSurvey(@RequestBody @Valid SurveyDTO surveyDTO, Authentication auth) {
+        User u = (User) auth.getPrincipal();
+        surveyDTO.setCoordinatorId(u.getId());
+
         SurveyDTO s = surveyService.createSurvey(surveyDTO);
         URI uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
