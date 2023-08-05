@@ -56,4 +56,9 @@ public class SurveyResponsePK implements Serializable {
     public int hashCode() {
         return Objects.hash(respondent, survey);
     }
+
+    @Override
+    public String toString() {
+        return "surveyId: " + survey.getId() + ", respondentId: " + respondent.getId();
+    }
 }

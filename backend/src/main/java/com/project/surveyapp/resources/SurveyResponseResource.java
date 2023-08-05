@@ -2,6 +2,7 @@ package com.project.surveyapp.resources;
 
 
 import com.project.surveyapp.dto.SurveyResponseDTO;
+import com.project.surveyapp.entities.SurveyResponse;
 import com.project.surveyapp.entities.User;
 import com.project.surveyapp.services.SurveyResponseService;
 import jakarta.validation.Valid;
@@ -31,10 +32,16 @@ public class SurveyResponseResource {
 
         URI uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
-                        .path("/surveyId={surveyId}&respondentId={respondentId}")
-                        .buildAndExpand(sr.getSurveyId(), sr.getRespondentId())
+                        .queryParam("respondent", sr.getRespondentId())
+                        .buildAndExpand()
                         .toUri();
 
         return ResponseEntity.created(uri).body(sr);
+    }
+
+    @GetMapping(params = "respondent")
+    public ResponseEntity findByRespondentId(@PathVariable("id") Long surveyId, @RequestParam("respondent") Long respondentId) {
+        SurveyResponseDTO srDTO = surveyResponseService.findByRespondentId(respondentId, surveyId);
+        return ResponseEntity.ok().body(srDTO);
     }
 }

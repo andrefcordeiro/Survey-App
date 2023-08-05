@@ -1,6 +1,7 @@
 package com.project.surveyapp.services;
 
 import com.project.surveyapp.dto.QuestionDTO;
+import com.project.surveyapp.dto.QuestionResponseDTO;
 import com.project.surveyapp.dto.SurveyResponseDTO;
 import com.project.surveyapp.entities.*;
 import com.project.surveyapp.entities.pk.SurveyResponsePK;
@@ -28,18 +29,16 @@ public class SurveyResponseService {
     private QuestionRepository questionRepository;
 
     private SurveyResponse validateSurveyResponse(SurveyResponseDTO surveyResponseDTO) {
-        Long surveyId = surveyResponseDTO.getSurveyId();
-
-        // verificando se a survey existe
-        List<QuestionDTO> questions = questionRepository.searchQuestionsBySurveyId(surveyId);
-        if (questions.isEmpty())
-            throw new ResourceNotFoundException(surveyId);
-
-        // verificando se o respondent já preencheu está survey
-        surveyResponseDTO.setCompletionDate(Instant.now());
         Respondent r = new Respondent(surveyResponseDTO.getRespondentId());
         Survey s = new Survey(surveyResponseDTO.getSurveyId());
+        surveyResponseDTO.setCompletionDate(Instant.now());
 
+        // verificando se a survey existe
+        List<QuestionDTO> questions = questionRepository.searchQuestionsBySurveyId(s.getId());
+        if (questions.isEmpty())
+            throw new ResourceNotFoundException(s.getId());
+
+        // verificando se o respondent já preencheu está survey
         if (surveyResponseRepository.existsById(new SurveyResponsePK(r, s)))
             throw new InvalidSurveyResponseException("Respondent with id " + r.getId() +
                     " has already submitted a response to survey with id " + s.getId() + ".");
@@ -47,12 +46,12 @@ public class SurveyResponseService {
         // verificar se todas as perguntas foram respondidas
         if (surveyResponseDTO.getQuestionsResponses().size() != questions.size())
             throw new InvalidSurveyResponseException("Wrong number of responses to questions for survey with id "
-                    + surveyId + ". It should be " + questions.size() +
+                    + s.getId() + ". It should be " + questions.size() +
                     " but got " + surveyResponseDTO.getQuestionsResponses().size() + " instead.");
 
         // verificar se as opções selecionadas são validas
         Iterator<QuestionDTO> questionsIt = questions.iterator();
-        Iterator<SurveyResponseDTO.QuestionResponse> questionsResponsesIt =
+        Iterator<QuestionResponseDTO> questionsResponsesIt =
                 surveyResponseDTO.getQuestionsResponses().iterator();
 
         while (questionsIt.hasNext() && questionsResponsesIt.hasNext()) {
@@ -69,11 +68,26 @@ public class SurveyResponseService {
         return new SurveyResponse(r, s, surveyResponseDTO.getCompletionDate());
     }
 
+    public SurveyResponseDTO findByRespondentId(Long respondentId, Long surveyId) {
+        SurveyResponsePK srPK = new SurveyResponsePK(new Respondent(respondentId), new Survey(surveyId));
+        SurveyResponseDTO srDTO = surveyResponseRepository.findSurveyResponseById(respondentId, surveyId);
+
+        if (srDTO == null)
+            throw new ResourceNotFoundException(srPK);
+
+        Set<QuestionResponseDTO> questionResponses = questionResponseRepository.
+                findAllBySurveyResponse(respondentId, surveyId);
+
+        srDTO.setQuestionsResponses(questionResponses);
+
+        return srDTO;
+    }
+
     public SurveyResponseDTO submitSurvey(SurveyResponseDTO surveyResponseDTO) {
         SurveyResponse sr = validateSurveyResponse(surveyResponseDTO);
         surveyResponseRepository.save(sr);
 
-        for (SurveyResponseDTO.QuestionResponse qrDTO :
+        for (QuestionResponseDTO qrDTO :
                 surveyResponseDTO.getQuestionsResponses()) {
             Question q = new Question(qrDTO.getQuestionId());
             QuestionResponse qr = new QuestionResponse(q, sr, qrDTO.getOptionSelected());

@@ -2,10 +2,7 @@ package com.project.surveyapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -24,52 +21,15 @@ public class SurveyResponseDTO implements Serializable {
 
     @Valid
     @NotEmpty(message = "questionsResponses should not be empty")
-    private Set<QuestionResponse> questionsResponses = new LinkedHashSet<>();
+    private Set<QuestionResponseDTO> questionsResponses = new LinkedHashSet<>();
 
     public SurveyResponseDTO() {
     }
 
-    public static class QuestionResponse {
-
-        @NotNull(message = "questionId should not be empty")
-        private Long questionId;
-
-        @NotNull(message = "optionSelected should not be empty")
-        @Min(value = 1, message = "optionSelected should be between 1 and 5")
-        @Max(value = 5, message = "optionSelected should be between 1 and 5")
-        private Integer optionSelected;
-
-        public QuestionResponse() {
-        }
-
-        public Long getQuestionId() {
-            return questionId;
-        }
-
-        public void setQuestionId(Long questionId) {
-            this.questionId = questionId;
-        }
-
-        public Integer getOptionSelected() {
-            return optionSelected;
-        }
-
-        public void setOptionSelected(Integer optionSelected) {
-            this.optionSelected = optionSelected;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            QuestionResponse that = (QuestionResponse) o;
-            return Objects.equals(questionId, that.questionId);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(questionId);
-        }
+    public SurveyResponseDTO(Long respondentId, Long surveyId, Instant completionDate) {
+        this.respondentId = respondentId;
+        this.surveyId = surveyId;
+        this.completionDate = completionDate;
     }
 
     public Long getRespondentId() {
@@ -96,11 +56,11 @@ public class SurveyResponseDTO implements Serializable {
         this.completionDate = completionDate;
     }
 
-    public Set<QuestionResponse> getQuestionsResponses() {
+    public Set<QuestionResponseDTO> getQuestionsResponses() {
         return questionsResponses;
     }
 
-    public void setQuestionsResponses(Set<QuestionResponse> questionsResponses) {
+    public void setQuestionsResponses(Set<QuestionResponseDTO> questionsResponses) {
         this.questionsResponses = questionsResponses;
     }
 
