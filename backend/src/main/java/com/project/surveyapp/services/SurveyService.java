@@ -1,18 +1,23 @@
 package com.project.surveyapp.services;
 
 import com.project.surveyapp.dto.QuestionDTO;
+import com.project.surveyapp.dto.QuestionStatisticsDTO;
 import com.project.surveyapp.entities.Coordinator;
 import com.project.surveyapp.entities.Question;
 import com.project.surveyapp.entities.Survey;
 import com.project.surveyapp.dto.SurveyDTO;
+import com.project.surveyapp.projections.QuestionStatisticsProjection;
 import com.project.surveyapp.repositories.QuestionRepository;
+import com.project.surveyapp.repositories.QuestionResponseRepository;
 import com.project.surveyapp.repositories.SurveyRepository;
+import com.project.surveyapp.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SurveyService {
@@ -22,6 +27,9 @@ public class SurveyService {
 
     @Autowired
     private QuestionRepository questionRepository;
+
+    @Autowired
+    private QuestionResponseRepository questionResponseRepository;
 
     @Transactional(readOnly = true)
     public List<SurveyDTO> findAll() {
@@ -61,5 +69,22 @@ public class SurveyService {
             s.setQuestions(questions);
         }
         return surveys;
+    }
+
+    @Transactional(readOnly = true)
+    public SurveyDTO getSurveyWithQuestionsStatistics(Long surveyId) {
+        Optional<Survey> obj = surveyRepository.findById(surveyId);
+        if (obj.isEmpty())
+            throw new ResourceNotFoundException(surveyId);
+
+        SurveyDTO srDTO = new SurveyDTO(obj.get());
+        List<QuestionDTO> questions = questionRepository.searchQuestionsBySurveyId(surveyId);
+
+        for (QuestionDTO q : questions) {
+            QuestionStatisticsProjection qStatsProj = questionResponseRepository.getOptionSelectionCounts(surveyId, q.getId());
+            QuestionStatisticsDTO qStatsDTO = new QuestionStatisticsDTO(q, qStatsProj);
+            srDTO.addQuestionStatistics(qStatsDTO);
+        }
+        return srDTO;
     }
 }

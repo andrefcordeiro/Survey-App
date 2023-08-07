@@ -3,7 +3,6 @@ package com.project.surveyapp.resources;
 import com.project.surveyapp.dto.SurveyDTO;
 import com.project.surveyapp.entities.User;
 import com.project.surveyapp.services.SurveyService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +45,11 @@ public class SurveyResource {
     public ResponseEntity<List<SurveyDTO>> findByCoordinator(@Valid @RequestParam("coordinator") Long id) {
         List<SurveyDTO> list = surveyService.searchByCoordinator(id);
         return ResponseEntity.ok().body(list);
+    }
+
+    @RequestMapping(path = "/{id}/statistics")
+    public ResponseEntity getSurveyWithQuestionsStatistics(@PathVariable("id") Long surveyId) {
+        SurveyDTO srDTO = surveyService.getSurveyWithQuestionsStatistics(surveyId);
+        return ResponseEntity.ok().body(srDTO);
     }
 }
