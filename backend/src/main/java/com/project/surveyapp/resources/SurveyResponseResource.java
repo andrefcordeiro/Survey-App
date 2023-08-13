@@ -2,7 +2,6 @@ package com.project.surveyapp.resources;
 
 
 import com.project.surveyapp.dto.SurveyResponseDTO;
-import com.project.surveyapp.entities.SurveyResponse;
 import com.project.surveyapp.entities.User;
 import com.project.surveyapp.services.SurveyResponseService;
 import jakarta.validation.Valid;

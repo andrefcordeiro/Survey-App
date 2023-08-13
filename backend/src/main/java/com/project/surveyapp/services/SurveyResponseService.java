@@ -12,6 +12,7 @@ import com.project.surveyapp.services.exceptions.InvalidSurveyResponseException;
 import com.project.surveyapp.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.*;
@@ -68,6 +69,7 @@ public class SurveyResponseService {
         return new SurveyResponse(r, s, surveyResponseDTO.getCompletionDate());
     }
 
+    @Transactional(readOnly = true)
     public SurveyResponseDTO findByRespondentId(Long respondentId, Long surveyId) {
         SurveyResponsePK srPK = new SurveyResponsePK(new Respondent(respondentId), new Survey(surveyId));
         SurveyResponseDTO srDTO = surveyResponseRepository.findSurveyResponseById(respondentId, surveyId);
