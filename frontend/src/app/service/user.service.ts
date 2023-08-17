@@ -21,8 +21,21 @@ export class UserService {
       .pipe(tap((res) => this.setSession(res)));
   }
 
+  public userRegistration(user: User) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+
+    return this.http.post<User>(
+      'http://localhost:8080/auth/register',
+      user,
+      httpOptions
+    );
+  }
+
   private setSession(authResult: any) {
-    console.log(authResult);
     const expiresAt = moment().add(authResult.expirationDate, 'second');
 
     localStorage.setItem('id_token', authResult.token);

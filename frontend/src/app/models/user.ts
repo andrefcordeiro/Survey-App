@@ -1,3 +1,5 @@
+import { UserRole } from './enums/user-role';
+
 export class User {
   constructor(
     public id: number | undefined,
@@ -5,6 +7,6 @@ export class User {
     public email: string | undefined,
     public username: string,
     public password: string,
-    public role: string | undefined
+    public role: UserRole | undefined
   ) {}
 }

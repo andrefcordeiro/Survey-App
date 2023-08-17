@@ -1,0 +1,44 @@
+<div
+  class="container d-flex flex-column justify-content-center align-items-center vh-100 vw-100"
+>
+  <form
+    ngNativeValidate
+    [formGroup]="registrationForm"
+    (ngSubmit)="onSubmit()"
+    class="d-flex flex-column justify-content-center align-items-center w-50"
+  >
+    <app-text-input
+      [formGroup]="registrationForm"
+      fieldName="name"
+      fieldInputType="text"
+    ></app-text-input>
+
+    <app-text-input
+      [formGroup]="registrationForm"
+      fieldName="email"
+      fieldInputType="email"
+    ></app-text-input>
+
+    <app-text-input
+      [formGroup]="registrationForm"
+      fieldName="username"
+      fieldInputType="text"
+    ></app-text-input>
+
+    <app-text-input
+      [formGroup]="registrationForm"
+      fieldName="password"
+      fieldInputType="password"
+    ></app-text-input>
+
+    <app-radio-input
+      [formGroup]="registrationForm"
+      fieldName="role"
+      [enum]="userRole"
+      [enumKeys]="userRoleKeys"
+    >
+    </app-radio-input>
+
+    <button type="submit" class="btn btn-primary mt-3">Sign up</button>
+  </form>
+</div>

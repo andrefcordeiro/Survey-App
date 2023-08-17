@@ -1,0 +1,14 @@
+<div class="d-flex flex-column mt-3" [formGroup]="formGroup">
+  <div class="form-check m-3" *ngFor="let item of enumKeys">
+    <label class="form-check-label">
+      <input
+        class="form-check-input"
+        type="radio"
+        [value]="item"
+        name="{{ fieldName }}"
+        formControlName="{{ fieldName }}"
+      />
+      {{ enum[item] }}
+    </label>
+  </div>
+</div>

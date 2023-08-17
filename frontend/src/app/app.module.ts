@@ -7,9 +7,13 @@ import { AppComponent } from './app.component';
 import { InitialPageComponent } from './components/initial-page/initial-page.component';
 import { SurveyMinComponent } from './components/initial-page/survey-min/survey-min.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
-import { UserRegisterFormComponent } from './components/user-register-form/user-register-form.component';
 
 import { HttpClientModule } from '@angular/common/http';
+
+import { AppRoutingModule } from './app-routing.module';
+import { UserRegistrationFormComponent } from './components/user-registration-form/user-registration-form.component';
+import { TextInputComponent } from './components/utils/text-input/text-input.component';
+import { RadioInputComponent } from './components/utils/radio-input/radio-input.component'; // CLI imports AppRoutingModule
 
 @NgModule({
   declarations: [
@@ -17,9 +21,17 @@ import { HttpClientModule } from '@angular/common/http';
     InitialPageComponent,
     SurveyMinComponent,
     UserFormComponent,
-    UserRegisterFormComponent,
+    UserRegistrationFormComponent,
+    TextInputComponent,
+    RadioInputComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
