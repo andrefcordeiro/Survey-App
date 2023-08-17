@@ -2,8 +2,8 @@ package com.project.surveyapp.entities.enums;
 
 public enum UserRole {
 
-    COORDINATOR(1),
-    RESPONDENT(2);
+    COORDINATOR(0),
+    RESPONDENT(1);
 
     private int code;
 

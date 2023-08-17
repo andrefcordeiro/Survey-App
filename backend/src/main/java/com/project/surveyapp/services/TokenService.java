@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.project.surveyapp.dto.AuthTokenDTO;
 import com.project.surveyapp.entities.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String generateToken(User user){
+    public AuthTokenDTO generateToken(User user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
@@ -27,14 +28,14 @@ public class TokenService {
                     .withSubject(user.getUsername())
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
-            return token;
+            return new AuthTokenDTO(token, generateExpirationDate());
 
-        } catch (JWTCreationException e){
+        } catch (JWTCreationException e) {
             throw new RuntimeException("Error while generating token", e);
         }
     }
 
-    public String validateToken(String token){
+    public String validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
@@ -42,12 +43,12 @@ public class TokenService {
                     .build()
                     .verify(token)
                     .getSubject();
-        } catch (JWTVerificationException e){
+        } catch (JWTVerificationException e) {
             return "";
         }
     }
 
-    private Instant generateExpirationDate(){
+    private Instant generateExpirationDate() {
         // expiração em 2 horas no timezone de Brasília
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }

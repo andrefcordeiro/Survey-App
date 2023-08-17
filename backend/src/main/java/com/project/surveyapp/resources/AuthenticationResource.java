@@ -2,7 +2,6 @@ package com.project.surveyapp.resources;
 
 import com.project.surveyapp.entities.User;
 import com.project.surveyapp.dto.AuthenticationDTO;
-import com.project.surveyapp.dto.LoginResponseDTO;
 import com.project.surveyapp.dto.RegisterDTO;
 import com.project.surveyapp.services.TokenService;
 import com.project.surveyapp.services.UserService;
@@ -37,7 +36,7 @@ public class AuthenticationResource {
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping("/register")
