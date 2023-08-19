@@ -1,18 +1,19 @@
-import { Component, Input } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
-import { User } from "src/app/models/user";
-import { UserService } from "src/app/service/user.service";
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-user-form",
-  templateUrl: "./user-form.component.html",
-  styleUrls: ["./user-form.component.css"],
+  selector: 'app-user-form',
+  templateUrl: './user-form.component.html',
+  styleUrls: ['./user-form.component.css'],
   providers: [UserService],
 })
 export class UserFormComponent {
   loginForm = this.fb.group({
-    username: ["", Validators.required],
-    password: ["", Validators.required],
+    username: ['', Validators.required],
+    password: ['', Validators.required],
   });
 
   onSubmit() {
@@ -26,7 +27,12 @@ export class UserFormComponent {
     );
 
     this.userService.userLogin(user).subscribe();
+    this.router.navigate(['/initial-page']);
   }
 
-  constructor(private fb: FormBuilder, private userService: UserService) {}
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router
+  ) {}
 }
