@@ -28,7 +28,7 @@ public class TokenService {
                     .withSubject(user.getUsername())
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
-            return new AuthTokenDTO(token, generateExpirationDate());
+            return new AuthTokenDTO(token, generateExpirationDate(), user.getId(), user.getRole());
 
         } catch (JWTCreationException e) {
             throw new RuntimeException("Error while generating token", e);
