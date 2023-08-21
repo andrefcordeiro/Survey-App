@@ -1,0 +1,8 @@
+<table class="table">
+  <tbody *ngFor="let entry of map | keyvalue">
+    <tr>
+      <th class="text-primary" scope="row">{{ entry.key }}</th>
+      <td>{{ entry.value }}</td>
+    </tr>
+  </tbody>
+</table>

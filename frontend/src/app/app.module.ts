@@ -17,6 +17,8 @@ import { RadioInputComponent } from './components/utils/radio-input/radio-input.
 import { AuthInterceptor } from './middlewares/auth-interceptor';
 import { UserService } from './service/user.service';
 import { SurveyService } from './service/survey.service';
+import { SurveyPageComponent } from './components/survey-page/survey-page.component';
+import { KeyValueTableComponent } from './components/utils/key-value-table/key-value-table.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { SurveyService } from './service/survey.service';
     UserRegistrationFormComponent,
     TextInputComponent,
     RadioInputComponent,
+    SurveyPageComponent,
+    KeyValueTableComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,8 @@
   <p class="h1 text-primary text-center m-5">Surveys</p>
 
   <div class="" *ngFor="let survey of surveys" id="survey-list">
-    <app-survey-min [survey]="survey"></app-survey-min>
+    <a routerLink="/survey/{{ survey.id }}" class="">
+      <app-survey-min [survey]="survey"></app-survey-min>
+    </a>
   </div>
 </div>
