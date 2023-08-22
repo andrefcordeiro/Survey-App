@@ -16,5 +16,11 @@ export class SurveyService {
     return this.http.get<Survey[]>('http://localhost:8080/surveys');
   }
 
+  public getSurveyStatistics(surveyId: Number): Observable<Survey> {
+    return this.http.get<Survey>(
+      `http://localhost:8080/surveys/${surveyId}/statistics`
+    );
+  }
+
   constructor(private http: HttpClient) {}
 }

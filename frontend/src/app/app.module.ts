@@ -19,6 +19,8 @@ import { UserService } from './service/user.service';
 import { SurveyService } from './service/survey.service';
 import { SurveyPageComponent } from './components/survey-page/survey-page.component';
 import { KeyValueTableComponent } from './components/utils/key-value-table/key-value-table.component';
+import { SurveyStatisticsComponent } from './components/survey-page/survey-statistics/survey-statistics.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { KeyValueTableComponent } from './components/utils/key-value-table/key-v
     RadioInputComponent,
     SurveyPageComponent,
     KeyValueTableComponent,
+    SurveyStatisticsComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { KeyValueTableComponent } from './components/utils/key-value-table/key-v
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    NgChartsModule,
   ],
   providers: [
     UserService,

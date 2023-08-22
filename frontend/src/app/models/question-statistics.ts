@@ -1,11 +1,14 @@
 export class QuestionStatistics {
-  constructor(public optionNumber: number, public numberOfSelections: number) {}
+  constructor(public questionId: number, public text: string) {}
 
-  optionsSelectionCounts: Array<QuestionStatistics.OptionSelectionCount>;
+  optionSelectionCounts: Array<QuestionStatistics.OptionSelectionCount>;
 }
 
 export namespace QuestionStatistics {
   export class OptionSelectionCount {
-    constructor(public questionId: number, public text: string) {}
+    constructor(
+      public optionNumber: number,
+      public numberOfSelections: number
+    ) {}
   }
 }

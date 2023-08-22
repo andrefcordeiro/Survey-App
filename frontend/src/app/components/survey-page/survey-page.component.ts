@@ -1,46 +1,39 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UserRole } from 'src/app/models/enums/user-role';
-import { SurveyResponse } from 'src/app/models/survey-response';
-import { SurveyResponseService } from 'src/app/service/survey-response.service';
+import { Survey } from 'src/app/models/survey';
+import { SurveyService } from 'src/app/service/survey.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-survey-page',
   templateUrl: './survey-page.component.html',
   styleUrls: ['./survey-page.component.css'],
-  providers: [SurveyResponseService, UserService],
+  providers: [SurveyService, UserService],
 })
-export class SurveyPageComponent {
+export class SurveyPageComponent implements OnInit {
   @Input() id: Number;
-  surveyResponse: SurveyResponse;
-  surveyDetailsMap: any;
+  surveyStatistics: Survey;
   userRole: UserRole;
+  roleTypes = UserRole;
+  contentIsLoaded = false;
 
   ngOnInit() {
     this.userRole = this.userService.getUserRole();
-    this.surveyResponseService
-      .getSurvey(this.id, this.userRole)
-      .subscribe((res) => {
-        this.surveyResponse = res;
 
-        console.log(this.surveyResponse);
+    if (this.userRole === UserRole.COORDINATOR) {
+      this.getSurveyStatistics();
+    }
+  }
 
-        this.surveyDetailsMap.set(
-          'Coordinator',
-          this.surveyResponse.coordinatorUsername
-        );
-        this.surveyDetailsMap.set(
-          'Creation date',
-          this.surveyResponse.creationDate
-        );
-        this.surveyDetailsMap.set('Timeframe', this.surveyResponse.timeframe);
-      });
+  private getSurveyStatistics() {
+    this.surveyService.getSurveyStatistics(this.id).subscribe((res) => {
+      this.surveyStatistics = res;
+      this.contentIsLoaded = true;
+    });
   }
 
   constructor(
-    private surveyResponseService: SurveyResponseService,
+    private surveyService: SurveyService,
     private userService: UserService
-  ) {
-    this.surveyDetailsMap = new Map();
-  }
+  ) {}
 }
