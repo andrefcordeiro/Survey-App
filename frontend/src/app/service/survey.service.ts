@@ -3,6 +3,7 @@ import { Survey } from '../models/survey';
 import { UserRole } from '../models/enums/user-role';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SurveyStatistics } from '../models/survey-statistics';
 
 @Injectable()
 export class SurveyService {
@@ -16,8 +17,8 @@ export class SurveyService {
     return this.http.get<Survey[]>('http://localhost:8080/surveys');
   }
 
-  public getSurveyStatistics(surveyId: Number): Observable<Survey> {
-    return this.http.get<Survey>(
+  public getSurveyStatistics(surveyId: Number): Observable<SurveyStatistics> {
+    return this.http.get<SurveyStatistics>(
       `http://localhost:8080/surveys/${surveyId}/statistics`
     );
   }

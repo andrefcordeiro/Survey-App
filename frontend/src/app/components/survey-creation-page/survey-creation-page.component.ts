@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Question } from 'src/app/models/question';
 import { Survey } from 'src/app/models/survey';
 import { SurveyService } from 'src/app/service/survey.service';
 import { ArrayValidators } from 'src/app/service/validators/array.validators';
@@ -14,7 +15,7 @@ export class SurveyCreationPageComponent {
   surveyCreationForm = this.fb.nonNullable.group({
     title: ['', Validators.required],
     timeframe: [new Date(), Validators.required],
-    questions: this.fb.nonNullable.array<Survey.Question>(
+    questions: this.fb.nonNullable.array<Question>(
       [],
       [ArrayValidators.minLength(1), ArrayValidators.maxLength(10)]
     ),
@@ -44,7 +45,7 @@ export class SurveyCreationPageComponent {
   }
 
   private formatQuestionsForRequest() {
-    let questions: Survey.Question[] = [];
+    let questions: Question[] = [];
     const questionsFormArray = this.questions();
 
     for (let i = 0; i < questionsFormArray.controls.length; i++) {
@@ -57,11 +58,7 @@ export class SurveyCreationPageComponent {
         options.push(optionsArray[j]['option']);
       }
 
-      const q: Survey.Question = new Survey.Question(
-        undefined,
-        qFormGroup['text'],
-        options
-      );
+      const q: Question = new Question(undefined, qFormGroup['text'], options);
 
       questions.push(q);
     }
@@ -70,7 +67,7 @@ export class SurveyCreationPageComponent {
   }
 
   onSubmit() {
-    let questions: Survey.Question[] = this.formatQuestionsForRequest();
+    let questions: Question[] = this.formatQuestionsForRequest();
 
     const survey: Survey = new Survey(
       undefined,
@@ -85,7 +82,7 @@ export class SurveyCreationPageComponent {
     this.surveyService.createSurvey(survey).subscribe({
       next: (val) => {
         console.log(val);
-        // this.router.navigate([`/survey/${val.id}`]);
+        this.router.navigate([`/survey/${val.id}`]);
       },
       error: (e) => console.log(e),
     });

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserRole } from 'src/app/models/enums/user-role';
-import { Survey } from 'src/app/models/survey';
+import { SurveyStatistics } from 'src/app/models/survey-statistics';
 import { SurveyService } from 'src/app/service/survey.service';
 import { UserService } from 'src/app/service/user.service';
 
@@ -12,7 +12,7 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class SurveyPageComponent implements OnInit {
   @Input() id: Number;
-  surveyStatistics: Survey;
+  surveyStatistics: SurveyStatistics;
   userRole: UserRole;
   roleTypes = UserRole;
   contentIsLoaded = false;

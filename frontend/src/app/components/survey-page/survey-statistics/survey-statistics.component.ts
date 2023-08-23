@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { QuestionStatistics } from 'src/app/models/question-statistics';
-import { Survey } from 'src/app/models/survey';
+import { SurveyStatistics } from 'src/app/models/survey-statistics';
 
 @Component({
   selector: 'app-survey-statistics',
@@ -8,7 +8,7 @@ import { Survey } from 'src/app/models/survey';
   styleUrls: ['./survey-statistics.component.css'],
 })
 export class SurveyStatisticsComponent {
-  @Input() surveyStatistics: Survey;
+  @Input() surveyStatistics: SurveyStatistics;
 
   ngOnInit() {}
 

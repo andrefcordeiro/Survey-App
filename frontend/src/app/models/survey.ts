@@ -1,4 +1,4 @@
-import { QuestionStatistics } from './question-statistics';
+import { Question } from './question';
 
 export class Survey {
   constructor(
@@ -8,17 +8,6 @@ export class Survey {
     public creationDate?: string | undefined,
     public coordinatorId?: number | undefined,
     public coordinatorUsername?: number | undefined,
-    public questions?: Array<Survey.Question> | undefined,
-    public questionsStatistics?: QuestionStatistics[]
+    public questions?: Question[] | undefined
   ) {}
-}
-
-export namespace Survey {
-  export class Question {
-    constructor(
-      public id: number | undefined,
-      public text: string,
-      public options: string[]
-    ) {}
-  }
 }
