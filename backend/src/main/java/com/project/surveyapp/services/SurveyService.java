@@ -37,6 +37,14 @@ public class SurveyService {
         return surveys.stream().map(SurveyDTO::new).toList();
     }
 
+    private String getOptionByIndex(List<String> options, int index) {
+        try {
+            return options.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+
     public SurveyDTO createSurvey(SurveyDTO surveyDTO) {
         Coordinator c = new Coordinator();
         c.setId(surveyDTO.getCoordinatorId());
@@ -49,11 +57,11 @@ public class SurveyService {
                     new Question(
                             null,
                             qDTO.getText(),
-                            qDTO.getOptions().get(0),
-                            qDTO.getOptions().get(1),
-                            qDTO.getOptions().get(2),
-                            qDTO.getOptions().get(3),
-                            qDTO.getOptions().get(4));
+                            getOptionByIndex(qDTO.getOptions(), 0),
+                            getOptionByIndex(qDTO.getOptions(), 1),
+                            getOptionByIndex(qDTO.getOptions(), 2),
+                            getOptionByIndex(qDTO.getOptions(), 3),
+                            getOptionByIndex(qDTO.getOptions(), 4));
             survey.addQuestion(q);
         }
 
