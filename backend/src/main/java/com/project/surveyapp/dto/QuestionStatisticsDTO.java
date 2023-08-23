@@ -21,12 +21,15 @@ public class QuestionStatisticsDTO {
         this.text = q.getText();
         this.questionId = projection.getQuestionId();
 
-        String[] options = projection.getOptions().split(",");
-        String[] optionsNumberOfSelections = projection.getOptionsNumberOfSelections().split(",");
+        if (projection.getOptions() != null) {
 
-        for (int i = 0; i < options.length; i++) {
-            this.optionSelectionCounts.add(new OptionSelectionCount(Integer.parseInt(options[i]),
-                    Long.parseLong(optionsNumberOfSelections[i])));
+            String[] options = projection.getOptions().split(",");
+            String[] optionsNumberOfSelections = projection.getOptionsNumberOfSelections().split(",");
+
+            for (int i = 0; i < options.length; i++) {
+                this.optionSelectionCounts.add(new OptionSelectionCount(Integer.parseInt(options[i]),
+                        Long.parseLong(optionsNumberOfSelections[i])));
+            }
         }
     }
 
