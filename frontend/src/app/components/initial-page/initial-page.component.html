@@ -10,4 +10,13 @@
       <app-survey-min [survey]="survey"></app-survey-min>
     </a>
   </div>
+
+  <a
+    routerLink="/survey-creation-page"
+    class="btn btn-primary btn-lg rounded-circle"
+    *ngIf="userRole === roleTypes.COORDINATOR"
+    style="position: fixed; bottom: 10%; right: 3%"
+  >
+    +
+  </a>
 </div>

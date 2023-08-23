@@ -1,0 +1,40 @@
+<div class="d-flex flex-column align-items-center border p-5 mt-3">
+  <button
+    type="button"
+    (click)="removeQuestion(questionIndex)"
+    class="btn btn-danger align-self-end"
+  >
+    x
+  </button>
+  <app-text-input
+    class="w-100"
+    [formGroup]="getQuestion(questionIndex)"
+    fieldName="text"
+    fieldInputType="text"
+  ></app-text-input>
+
+  <button type="button" (click)="addOption()" class="btn btn-dark mt-3">
+    Add option
+  </button>
+
+  <!-- Options -->
+  <div
+    *ngFor="let o of options().controls; let j = index"
+    class="d-flex flex-row justify-content-center w-100"
+  >
+    <app-text-input
+      class="w-100 me-3"
+      [formGroup]="getOption(j)"
+      fieldName="option"
+      fieldInputType="text"
+    ></app-text-input>
+
+    <button
+      type="button"
+      (click)="removeOption(j)"
+      class="btn btn-danger align-self-end"
+    >
+      x
+    </button>
+  </div>
+</div>

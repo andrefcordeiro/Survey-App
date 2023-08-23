@@ -2,22 +2,21 @@ import { QuestionStatistics } from './question-statistics';
 
 export class Survey {
   constructor(
-    public id: number,
-    public title: string,
-    public timeframe: Date,
-    public creationDate: string,
-    public coordinatorId: number,
-    public coordinatorUsername: number,
-    public questionsStatistics: QuestionStatistics[]
+    public id: number | undefined,
+    public title: string | undefined,
+    public timeframe: Date | undefined,
+    public creationDate?: string | undefined,
+    public coordinatorId?: number | undefined,
+    public coordinatorUsername?: number | undefined,
+    public questions?: Array<Survey.Question> | undefined,
+    public questionsStatistics?: QuestionStatistics[]
   ) {}
-
-  questions: Array<Survey.Question>;
 }
 
 export namespace Survey {
   export class Question {
     constructor(
-      public id: number,
+      public id: number | undefined,
       public text: string,
       public options: string[]
     ) {}

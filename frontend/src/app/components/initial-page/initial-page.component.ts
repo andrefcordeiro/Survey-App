@@ -12,15 +12,17 @@ import { Survey } from 'src/app/models/survey';
 })
 export class InitialPageComponent {
   surveys: Survey[] = [];
+  userRole: UserRole;
+  roleTypes = UserRole;
 
   ngOnInit() {
     this.getSurveys();
   }
 
   getSurveys() {
-    const userRole: UserRole = this.userService.getUserRole();
+    this.userRole = this.userService.getUserRole();
     const userId: Number = Number(this.userService.getUserId());
-    this.surveyService.getSurveys(userId, userRole).subscribe((res) => {
+    this.surveyService.getSurveys(userId, this.userRole).subscribe((res) => {
       this.surveys = res;
     });
   }

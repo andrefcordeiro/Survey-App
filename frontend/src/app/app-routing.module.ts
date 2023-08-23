@@ -9,6 +9,7 @@ import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserRegistrationFormComponent } from './components/user-registration-form/user-registration-form.component';
 import { InitialPageComponent } from './components/initial-page/initial-page.component';
 import { SurveyPageComponent } from './components/survey-page/survey-page.component';
+import { SurveyCreationPageComponent } from './components/survey-creation-page/survey-creation-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'registration', component: UserRegistrationFormComponent },
   { path: 'initial-page', component: InitialPageComponent },
   { path: 'survey/:id', component: SurveyPageComponent },
+  { path: 'survey-creation-page', component: SurveyCreationPageComponent },
 ];
 
 @NgModule({

@@ -21,6 +21,8 @@ import { SurveyPageComponent } from './components/survey-page/survey-page.compon
 import { KeyValueTableComponent } from './components/utils/key-value-table/key-value-table.component';
 import { SurveyStatisticsComponent } from './components/survey-page/survey-statistics/survey-statistics.component';
 import { NgChartsModule } from 'ng2-charts';
+import { SurveyCreationPageComponent } from './components/survey-creation-page/survey-creation-page.component';
+import { QuestionCreationComponent } from './components/survey-creation-page/question-creation/question-creation.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { NgChartsModule } from 'ng2-charts';
     SurveyPageComponent,
     KeyValueTableComponent,
     SurveyStatisticsComponent,
+    SurveyCreationPageComponent,
+    QuestionCreationComponent,
   ],
   imports: [
     BrowserModule,
