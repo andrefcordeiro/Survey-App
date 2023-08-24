@@ -1,5 +1,10 @@
 <div class="container d-flex flex-column align-items-center vh-100 vw-100">
+  <p *ngIf="userAlreadyResponded" class="mt-5">
+    You have already submitted your answers to this survey.
+  </p>
+
   <form
+    *ngIf="userAlreadyResponded === false"
     ngNativeValidate
     [formGroup]="surveyResponseForm"
     (ngSubmit)="onSubmit()"

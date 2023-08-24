@@ -6,6 +6,7 @@ import { QuestionResponse } from 'src/app/models/question-response';
 import { Survey } from 'src/app/models/survey';
 import { SurveyResponse } from 'src/app/models/survey-response';
 import { SurveyResponseService } from 'src/app/service/survey-response.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-survey-response',
@@ -14,13 +15,33 @@ import { SurveyResponseService } from 'src/app/service/survey-response.service';
 })
 export class SurveyResponseComponent implements OnInit {
   @Input() survey: Survey;
+  userAlreadyResponded: boolean = false;
 
   surveyResponseForm: FormGroup = this.fb.group({
     questionResponses: this.fb.array([]),
   });
 
   ngOnInit() {
-    this.createForm();
+    this.checkIfUserAlreadyRespondedSurvey();
+
+    if (!this.userAlreadyResponded) {
+      this.createForm();
+    }
+  }
+
+  private checkIfUserAlreadyRespondedSurvey() {
+    const userId: number = Number(this.userService.getUserId());
+
+    this.surveyResponseService
+      .getUserResponse(this.survey.id!, userId)
+      .subscribe({
+        next: () => {
+          this.userAlreadyResponded = true;
+        },
+        error: () => {
+          this.userAlreadyResponded = false;
+        },
+      });
   }
 
   getQuestion(index: number): Question {
@@ -76,6 +97,7 @@ export class SurveyResponseComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private surveyResponseService: SurveyResponseService,
+    private userService: UserService,
     private router: Router
   ) {}
 }

@@ -22,4 +22,16 @@ export class SurveyResponseService {
       httpOptions
     );
   }
+
+  public getUserResponse(
+    surveyId: number,
+    respondentId: number
+  ): Observable<SurveyResponse> {
+    return this.http.get<SurveyResponse>(
+      'http://localhost:8080/surveys/' +
+        surveyId +
+        '/responses?respondent=' +
+        respondentId
+    );
+  }
 }
