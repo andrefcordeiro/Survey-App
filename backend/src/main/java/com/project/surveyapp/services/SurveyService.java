@@ -95,4 +95,11 @@ public class SurveyService {
         }
         return srDTO;
     }
+
+    @Transactional(readOnly = true)
+    public SurveyDTO findById(Long id) {
+        Optional<Survey> obj = surveyRepository.findById(id);
+
+        return new SurveyDTO(obj.get());
+    }
 }

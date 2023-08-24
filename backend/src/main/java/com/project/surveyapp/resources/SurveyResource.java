@@ -52,4 +52,10 @@ public class SurveyResource {
         SurveyDTO srDTO = surveyService.getSurveyWithQuestionsStatistics(surveyId);
         return ResponseEntity.ok().body(srDTO);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SurveyDTO> findById(@Valid @PathVariable("id") Long id) {
+        SurveyDTO survey = surveyService.findById(id);
+        return ResponseEntity.ok().body(survey);
+    }
 }
