@@ -14,7 +14,23 @@ export class SurveyMinComponent implements OnInit {
     this.surveyDetailsMap = new Map();
     this.surveyDetailsMap.set('Title', this.survey.title);
     this.surveyDetailsMap.set('Coordinator', this.survey.coordinatorUsername);
-    this.surveyDetailsMap.set('Creation date', this.survey.creationDate);
-    this.surveyDetailsMap.set('Timeframe', this.survey.timeframe);
+
+    this.surveyDetailsMap.set(
+      'Creation date',
+      this.formatDate(this.survey.creationDate!.toString().split('T')[0])
+    );
+
+    this.surveyDetailsMap.set(
+      'Timeframe',
+      this.formatDate(this.survey.timeframe!.toString())
+    );
+  }
+
+  private formatDate(date: string) {
+    const timeframeYearMonthDay = date.split('-');
+
+    return timeframeYearMonthDay![2]
+      .concat('/', timeframeYearMonthDay![1])
+      .concat('/', timeframeYearMonthDay![0]);
   }
 }
