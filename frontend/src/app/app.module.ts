@@ -23,6 +23,8 @@ import { SurveyStatisticsComponent } from './components/survey-page/survey-stati
 import { NgChartsModule } from 'ng2-charts';
 import { SurveyCreationPageComponent } from './components/survey-creation-page/survey-creation-page.component';
 import { QuestionCreationComponent } from './components/survey-creation-page/question-creation/question-creation.component';
+import { SurveyResponseComponent } from './components/survey-page/survey-response/survey-response.component';
+import { SurveyResponseService } from './service/survey-response.service';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { QuestionCreationComponent } from './components/survey-creation-page/que
     SurveyStatisticsComponent,
     SurveyCreationPageComponent,
     QuestionCreationComponent,
+    SurveyResponseComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ import { QuestionCreationComponent } from './components/survey-creation-page/que
   providers: [
     UserService,
     SurveyService,
+    SurveyResponseService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

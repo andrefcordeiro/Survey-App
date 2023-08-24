@@ -1,0 +1,31 @@
+<div class="container d-flex flex-column align-items-center vh-100 vw-100">
+  <form
+    ngNativeValidate
+    [formGroup]="surveyResponseForm"
+    (ngSubmit)="onSubmit()"
+    class="d-flex flex-column justify-content-center align-items-center w-50"
+  >
+    <div
+      *ngFor="let q of questionResponses().controls; let qIndex = index"
+      class="d-flex flex-column justify-content-center w-100 border p-5 mt-5"
+    >
+      <p>{{ getQuestion(qIndex).text }}</p>
+
+      <app-radio-input
+        [formGroup]="getQuestionResponse(qIndex)"
+        fieldName="optionSelected"
+        [structure]="getOptions(qIndex)"
+        [fieldValueAsIndex]="true"
+      >
+      </app-radio-input>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary mt-3 mb-5"
+      [disabled]="!surveyResponseForm.valid"
+    >
+      Submit
+    </button>
+  </form>
+</div>

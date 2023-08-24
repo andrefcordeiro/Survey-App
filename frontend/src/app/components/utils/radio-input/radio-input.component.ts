@@ -11,6 +11,7 @@ export class RadioInputComponent {
   @Input() fieldName: string;
   @Input() structure: any;
   @Input() isEnum: boolean = false;
+  @Input() fieldValueAsIndex: boolean = false; // atribuir o valor de cada campo como sua posição na structure
 
   getItems() {
     if (this.isEnum) {
@@ -19,12 +20,5 @@ export class RadioInputComponent {
       });
     }
     return this.structure;
-  }
-
-  getItem(item: string) {
-    if (this.isEnum) {
-      return this.structure[item];
-    }
-    return item;
   }
 }

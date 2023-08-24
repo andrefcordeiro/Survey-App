@@ -37,5 +37,9 @@ export class SurveyService {
     );
   }
 
+  public getSurvey(surveyId: Number): Observable<Survey> {
+    return this.http.get<Survey>(`http://localhost:8080/surveys/${surveyId}`);
+  }
+
   constructor(private http: HttpClient) {}
 }

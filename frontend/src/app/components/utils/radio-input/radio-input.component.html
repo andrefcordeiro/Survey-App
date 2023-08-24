@@ -1,10 +1,10 @@
 <div class="d-flex flex-column mt-3" [formGroup]="formGroup">
-  <div class="form-check mb-3" *ngFor="let item of getItems()">
+  <div class="form-check mb-3" *ngFor="let item of getItems(); let i = index">
     <label class="form-check-label">
       <input
         class="form-check-input"
         type="radio"
-        [value]="item"
+        [value]="fieldValueAsIndex ? i + 1 : item"
         name="{{ fieldName }}"
         formControlName="{{ fieldName }}"
       />

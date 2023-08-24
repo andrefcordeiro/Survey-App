@@ -12,7 +12,9 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class SurveyPageComponent implements OnInit {
   @Input() id: Number;
-  surveyStatistics: SurveyStatistics;
+
+  survey: SurveyStatistics;
+
   userRole: UserRole;
   roleTypes = UserRole;
   contentIsLoaded = false;
@@ -22,12 +24,21 @@ export class SurveyPageComponent implements OnInit {
 
     if (this.userRole === UserRole.COORDINATOR) {
       this.getSurveyStatistics();
+    } else {
+      this.getSurvey();
     }
+  }
+
+  private getSurvey() {
+    this.surveyService.getSurvey(this.id).subscribe((res) => {
+      this.survey = res as SurveyStatistics;
+      this.contentIsLoaded = true;
+    });
   }
 
   private getSurveyStatistics() {
     this.surveyService.getSurveyStatistics(this.id).subscribe((res) => {
-      this.surveyStatistics = res;
+      this.survey = res;
       this.contentIsLoaded = true;
     });
   }
