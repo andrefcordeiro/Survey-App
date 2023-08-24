@@ -26,8 +26,12 @@ export class UserFormComponent {
       undefined
     );
 
-    this.userService.userLogin(user).subscribe();
-    this.router.navigate(['/initial-page']);
+    this.userService.userLogin(user).subscribe({
+      next: (val) => {
+        this.router.navigate(['/initial-page']);
+      },
+      error: (e) => console.log(e),
+    });
   }
 
   constructor(

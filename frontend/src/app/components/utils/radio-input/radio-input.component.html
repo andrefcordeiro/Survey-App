@@ -1,5 +1,5 @@
 <div class="d-flex flex-column mt-3" [formGroup]="formGroup">
-  <div class="form-check m-3" *ngFor="let item of enumKeys">
+  <div class="form-check mb-3" *ngFor="let item of getItems()">
     <label class="form-check-label">
       <input
         class="form-check-input"
@@ -8,7 +8,7 @@
         name="{{ fieldName }}"
         formControlName="{{ fieldName }}"
       />
-      {{ enum[item] }}
+      {{ item }}
     </label>
   </div>
 </div>

@@ -4,8 +4,6 @@ import { User } from 'src/app/models/user';
 import { UserRole } from 'src/app/models/enums/user-role';
 import { UserService } from 'src/app/service/user.service';
 import { Router } from '@angular/router';
-import { response } from 'express';
-import { error } from 'console';
 
 @Component({
   selector: 'app-user-registration-form',
@@ -23,7 +21,6 @@ export class UserRegistrationFormComponent {
   });
 
   public userRole = UserRole;
-  userRoleKeys: any;
 
   onSubmit() {
     const user: User = new User(
@@ -37,7 +34,6 @@ export class UserRegistrationFormComponent {
 
     this.userService.userRegistration(user).subscribe({
       next: (val) => {
-        console.log(val);
         this.router.navigate(['/login']);
       },
       error: (e) => console.log(e),
@@ -48,9 +44,5 @@ export class UserRegistrationFormComponent {
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router
-  ) {
-    this.userRoleKeys = Object.keys(this.userRole).filter(
-      (key) => key.length == 1
-    );
-  }
+  ) {}
 }

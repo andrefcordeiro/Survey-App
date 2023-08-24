@@ -9,6 +9,22 @@ import { FormGroup } from '@angular/forms';
 export class RadioInputComponent {
   @Input() formGroup: FormGroup;
   @Input() fieldName: string;
-  @Input() enum: any;
-  @Input() enumKeys: string[];
+  @Input() structure: any;
+  @Input() isEnum: boolean = false;
+
+  getItems() {
+    if (this.isEnum) {
+      return Object.keys(this.structure).filter((item: any) => {
+        return isNaN(Number(item));
+      });
+    }
+    return this.structure;
+  }
+
+  getItem(item: string) {
+    if (this.isEnum) {
+      return this.structure[item];
+    }
+    return item;
+  }
 }
