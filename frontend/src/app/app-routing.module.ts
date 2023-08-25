@@ -10,14 +10,27 @@ import { UserRegistrationFormComponent } from './components/user-registration-fo
 import { InitialPageComponent } from './components/initial-page/initial-page.component';
 import { SurveyPageComponent } from './components/survey-page/survey-page.component';
 import { SurveyCreationPageComponent } from './components/survey-creation-page/survey-creation-page.component';
+import { AuthorizeGuard } from './service/authorize-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: UserFormComponent },
   { path: 'registration', component: UserRegistrationFormComponent },
-  { path: 'initial-page', component: InitialPageComponent },
-  { path: 'survey/:id', component: SurveyPageComponent },
-  { path: 'survey-creation-page', component: SurveyCreationPageComponent },
+  {
+    path: 'initial-page',
+    component: InitialPageComponent,
+    canActivate: [AuthorizeGuard],
+  },
+  {
+    path: 'survey/:id',
+    component: SurveyPageComponent,
+    canActivate: [AuthorizeGuard],
+  },
+  {
+    path: 'survey-creation-page',
+    component: SurveyCreationPageComponent,
+    canActivate: [AuthorizeGuard],
+  },
 ];
 
 @NgModule({

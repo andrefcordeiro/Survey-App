@@ -41,7 +41,7 @@ export class UserService {
   }
 
   private setSession(authResult: any) {
-    const expiresAt = moment().add(authResult.expirationDate, 'second');
+    const expiresAt = moment(authResult.expirationDate);
 
     localStorage.setItem('id_token', authResult.token);
     localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
@@ -52,10 +52,12 @@ export class UserService {
   logout() {
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('role');
   }
 
   public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
+    return this.getToken() && moment().isBefore(this.getExpiration());
   }
 
   isLoggedOut() {
