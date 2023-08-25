@@ -14,6 +14,7 @@ export class SurveyPageComponent implements OnInit {
   @Input() id: Number;
 
   survey: SurveyStatistics;
+  surveyIsFinished: boolean = false;
 
   userRole: UserRole;
   roleTypes = UserRole;
@@ -22,25 +23,31 @@ export class SurveyPageComponent implements OnInit {
   ngOnInit() {
     this.userRole = this.userService.getUserRole();
 
-    if (this.userRole === UserRole.COORDINATOR) {
-      this.getSurveyStatistics();
-    } else {
-      this.getSurvey();
-    }
+    this.getSurvey();
   }
 
   private getSurvey() {
-    this.surveyService.getSurvey(this.id).subscribe((res) => {
-      this.survey = res as SurveyStatistics;
-      this.contentIsLoaded = true;
-    });
-  }
-
-  private getSurveyStatistics() {
     this.surveyService.getSurveyStatistics(this.id).subscribe((res) => {
       this.survey = res;
       this.contentIsLoaded = true;
+
+      this.checkIfSurveyIsFinished(this.survey.timeframe!);
     });
+  }
+
+  private checkIfSurveyIsFinished(timeframe: Date): boolean {
+    const timeframeDate = new Date(timeframe);
+    timeframeDate.setHours(0, 0, 0, 0);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (timeframeDate < today) {
+      this.surveyIsFinished = true;
+      return true;
+    }
+
+    return false;
   }
 
   constructor(

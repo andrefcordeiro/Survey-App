@@ -10,11 +10,11 @@
 
   <app-survey-statistics
     [surveyStatistics]="survey"
-    *ngIf="userRole === roleTypes.COORDINATOR"
+    *ngIf="userRole === roleTypes.COORDINATOR || surveyIsFinished"
   ></app-survey-statistics>
 
   <app-survey-response
-    *ngIf="userRole === roleTypes.RESPONDENT"
+    *ngIf="userRole === roleTypes.RESPONDENT && !surveyIsFinished"
     [survey]="survey"
   ></app-survey-response>
 </div>
