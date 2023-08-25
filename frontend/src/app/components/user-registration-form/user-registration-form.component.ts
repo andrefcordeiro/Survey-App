@@ -14,12 +14,13 @@ import { Router } from '@angular/router';
 export class UserRegistrationFormComponent {
   registrationForm = this.fb.group({
     name: ['', Validators.required],
-    email: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
     username: ['', Validators.required],
     password: ['', Validators.required],
     role: [null, Validators.required],
   });
 
+  error: string = '';
   public userRole = UserRole;
 
   onSubmit() {
@@ -33,11 +34,20 @@ export class UserRegistrationFormComponent {
     );
 
     this.userService.userRegistration(user).subscribe({
-      next: (val) => {
+      next: () => {
         this.router.navigate(['/login']);
       },
-      error: (e) => console.log(e),
+      error: (e) => {
+        console.log(e);
+        if (e.status === 403) {
+          this.error = 'User with this email or username already exists.';
+        }
+      },
     });
+  }
+
+  getEmailField() {
+    this.registrationForm.get('email');
   }
 
   constructor(

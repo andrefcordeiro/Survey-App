@@ -2,7 +2,6 @@
   class="container d-flex flex-column justify-content-center align-items-center vh-100 vw-100"
 >
   <form
-    ngNativeValidate
     [formGroup]="registrationForm"
     (ngSubmit)="onSubmit()"
     class="d-flex flex-column justify-content-center align-items-center w-50"
@@ -39,6 +38,21 @@
     >
     </app-radio-input>
 
-    <button type="submit" class="btn btn-primary mt-3">Sign up</button>
+    <p *ngIf="error" class="text-danger mt-3">{{ error }}</p>
+
+    <p
+      *ngIf="registrationForm.invalid && registrationForm.touched"
+      class="text-danger"
+    >
+      Please, provide an email with proper format.
+    </p>
+
+    <button
+      type="submit"
+      class="btn btn-primary mt-3"
+      [disabled]="!registrationForm.valid"
+    >
+      Sign up
+    </button>
   </form>
 </div>

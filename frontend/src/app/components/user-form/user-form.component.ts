@@ -16,6 +16,8 @@ export class UserFormComponent {
     password: ['', Validators.required],
   });
 
+  error: string = '';
+
   onSubmit() {
     const user: User = new User(
       undefined,
@@ -30,7 +32,13 @@ export class UserFormComponent {
       next: (val) => {
         this.router.navigate(['/initial-page']);
       },
-      error: (e) => console.log(e),
+      error: (e) => {
+        console.log(e);
+
+        if (e.status === 403) {
+          this.error = 'User does not exists.';
+        }
+      },
     });
   }
 
