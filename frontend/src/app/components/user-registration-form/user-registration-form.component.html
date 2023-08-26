@@ -1,58 +1,66 @@
 <div
   class="container d-flex flex-column justify-content-center align-items-center vh-100 vw-100"
 >
-  <form
-    [formGroup]="registrationForm"
-    (ngSubmit)="onSubmit()"
-    class="d-flex flex-column justify-content-center align-items-center w-50"
-  >
-    <app-text-input
+  <div class="d-flex flex-column border rounded-3 p-5 shadow">
+    <form
       [formGroup]="registrationForm"
-      fieldName="name"
-      fieldInputType="text"
-    ></app-text-input>
-
-    <app-text-input
-      [formGroup]="registrationForm"
-      fieldName="email"
-      fieldInputType="email"
-    ></app-text-input>
-
-    <app-text-input
-      [formGroup]="registrationForm"
-      fieldName="username"
-      fieldInputType="text"
-    ></app-text-input>
-
-    <app-text-input
-      [formGroup]="registrationForm"
-      fieldName="password"
-      fieldInputType="password"
-    ></app-text-input>
-
-    <app-radio-input
-      [formGroup]="registrationForm"
-      fieldName="role"
-      [structure]="userRole"
-      [isEnum]="true"
+      (ngSubmit)="onSubmit()"
+      class="d-flex flex-column align-items-center w-100"
     >
-    </app-radio-input>
+      <div class="fields-row">
+        <app-text-input
+          class="me-2"
+          [formGroup]="registrationForm"
+          fieldName="name"
+          fieldInputType="text"
+        ></app-text-input>
 
-    <p *ngIf="error" class="text-danger mt-3">{{ error }}</p>
+        <app-text-input
+          [formGroup]="registrationForm"
+          fieldName="email"
+          fieldInputType="email"
+        ></app-text-input>
+      </div>
 
-    <p
-      *ngIf="registrationForm.invalid && registrationForm.touched"
-      class="text-danger"
-    >
-      Please, provide an email with proper format.
-    </p>
+      <div class="fields-row">
+        <app-text-input
+          class="me-2"
+          [formGroup]="registrationForm"
+          fieldName="username"
+          fieldInputType="text"
+        ></app-text-input>
 
-    <button
-      type="submit"
-      class="btn btn-primary mt-3"
-      [disabled]="!registrationForm.valid"
-    >
-      Sign up
-    </button>
-  </form>
+        <app-text-input
+          [formGroup]="registrationForm"
+          fieldName="password"
+          fieldInputType="password"
+        ></app-text-input>
+      </div>
+
+      <app-radio-input
+        [formGroup]="registrationForm"
+        fieldName="role"
+        [structure]="userRole"
+        [isEnum]="true"
+      >
+      </app-radio-input>
+
+      <p *ngIf="error" class="text-danger mt-3">{{ error }}</p>
+
+      <p
+        *ngIf="registrationForm.invalid && registrationForm.touched"
+        class="text-danger"
+      >
+        Please, provide an email with proper format.
+      </p>
+
+      <button
+        type="submit"
+        class="btn btn-primary mt-3 w-50"
+        [disabled]="!registrationForm.valid"
+      >
+        Sign up
+      </button>
+    </form>
+  </div>
 </div>

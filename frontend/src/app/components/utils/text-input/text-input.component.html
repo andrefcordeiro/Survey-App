@@ -1,11 +1,9 @@
 <div class="form-group w-100 mt-3" [formGroup]="formGroup">
-  <label class="form-label" for="{{ fieldName }}">
-    {{ fieldName.charAt(0).toUpperCase() + fieldName.slice(1) }}
-  </label>
   <input
     type="{{ fieldInputType }}"
     class="form-control"
     formControlName="{{ fieldName }}"
+    placeholder="{{ fieldName.charAt(0).toUpperCase() + fieldName.slice(1) }}"
     required
   />
 </div>

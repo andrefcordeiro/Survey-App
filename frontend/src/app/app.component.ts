@@ -7,27 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'survey-app';
-
-  // userModel = {
-  //   name: {
-  //     type: 'text',
-  //     value: '',
-  //     label: 'name',
-  //     rules: {
-  //       required: true,
-  //     },
-  //   },
-  //   email: {
-  //     type: 'text',
-  //     value: '',
-  //     label: 'email',
-  //     rules: {
-  //       required: true,
-  //     },
-  //   },
-  // };
-
-  // userLogin() {
-  //   console.log(this.userModel);
-  // }
 }
