@@ -90,8 +90,10 @@ public class SurveyService {
 
         for (QuestionDTO q : questions) {
             QuestionStatisticsProjection qStatsProj = questionResponseRepository.getOptionSelectionCounts(surveyId, q.getId());
-            QuestionStatisticsDTO qStatsDTO = new QuestionStatisticsDTO(q, qStatsProj);
-            srDTO.addQuestionStatistics(qStatsDTO);
+            if (qStatsProj != null) {
+                QuestionStatisticsDTO qStatsDTO = new QuestionStatisticsDTO(q, qStatsProj);
+                srDTO.addQuestionStatistics(qStatsDTO);
+            }
         }
         return srDTO;
     }
