@@ -4,9 +4,13 @@
 >
   <p class="h1 text-primary text-center m-5">{{ survey.title }}</p>
 
-  <div class="container d-flex flex-column w-50">
+  <div class="container d-flex flex-column w-50 text-center">
     <app-survey-min [survey]="survey"></app-survey-min>
   </div>
+
+  <p class="text-success mt-3" *ngIf="surveyIsFinished">
+    This survey is finished.
+  </p>
 
   <app-survey-statistics
     [surveyStatistics]="survey"

@@ -1,5 +1,5 @@
 <div class="container d-flex flex-column align-items-center mt-3">
-  <p class="h2">Questions</p>
+  <p class="h2 mt-5 mb-4">Questions</p>
 
   <div
     *ngFor="let q of surveyStatistics.questions; let i = index"
@@ -23,7 +23,7 @@
       </div>
 
       <!-- Options selections statistics -->
-      <div *ngIf="surveyStatistics.questionsStatistics[i]">
+      <div class="mb-5" *ngIf="surveyStatistics.questionsStatistics[i]">
         <canvas
           baseChart
           [type]="'pie'"

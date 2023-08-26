@@ -8,11 +8,11 @@
     ngNativeValidate
     [formGroup]="surveyResponseForm"
     (ngSubmit)="onSubmit()"
-    class="d-flex flex-column justify-content-center align-items-center w-50"
+    class="d-flex flex-column align-items-center w-50"
   >
     <div
       *ngFor="let q of questionResponses().controls; let qIndex = index"
-      class="d-flex flex-column justify-content-center w-100 border p-5 mt-5"
+      class="d-flex flex-column justify-content-center w-100 p-5 mt-5"
     >
       <p>{{ getQuestion(qIndex).text }}</p>
 
