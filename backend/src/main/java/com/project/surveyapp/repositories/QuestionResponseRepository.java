@@ -27,6 +27,7 @@ public interface QuestionResponseRepository extends JpaRepository<QuestionRespon
                 WHERE survey_id = :surveyId AND question_id = :questionId
                 GROUP BY question_id, option_selected
                 ORDER BY option_selected) AS question_responses
+             GROUP BY question_id
             """, nativeQuery = true)
     QuestionStatisticsProjection getOptionSelectionCounts(Long surveyId, Long questionId);
 }

@@ -84,9 +84,8 @@ public class TestConfig implements CommandLineRunner {
 
         // survey 2 respondent 1
         SurveyResponse r1s2 = new SurveyResponse(r1, s2, Instant.parse("2019-10-03T03:42:10Z"));
-        QuestionResponse rq3 = new QuestionResponse(q1s1, r1s2, 3);
+        QuestionResponse rq3 = new QuestionResponse(q1s2, r1s2, 3);
         r1s2.addRespondedQuestions(Arrays.asList(rq3));
-
         // survey 1 respondent 2
         SurveyResponse r2s1 = new SurveyResponse(r2, s1, Instant.parse("2019-07-01T03:42:10Z"));
         QuestionResponse rq4 = new QuestionResponse(q1s1, r2s1, 4);

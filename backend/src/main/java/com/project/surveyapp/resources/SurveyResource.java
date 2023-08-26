@@ -47,7 +47,7 @@ public class SurveyResource {
         return ResponseEntity.ok().body(list);
     }
 
-    @RequestMapping(path = "/{id}/statistics")
+    @GetMapping(path = "/{id}/statistics")
     public ResponseEntity getSurveyWithQuestionsStatistics(@PathVariable("id") Long surveyId) {
         SurveyDTO srDTO = surveyService.getSurveyWithQuestionsStatistics(surveyId);
         return ResponseEntity.ok().body(srDTO);
