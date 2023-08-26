@@ -117,6 +117,17 @@ The JWT token is returned by the **POST /auth/login** endpoint and need to be in
 </tr>
 </table>
 
+### GET /surveys/{id}
+
+<table>
+<tr>
+<td> Usage </td>
+</tr>
+<tr>
+<td> Get survey by id. </td>
+</tr>
+</table>
+
 
 ### GET /surveys?coordinator={coordinatorId}
 
