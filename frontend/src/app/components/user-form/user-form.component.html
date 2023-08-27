@@ -1,0 +1,41 @@
+<div
+  class="container d-flex flex-column justify-content-center align-items-center vh-100 vw-100"
+>
+  <div class="d-flex flex-column border rounded-3 p-5 shadow">
+    <form
+      noValidate
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      class="d-flex flex-column w-100"
+    >
+      <app-text-input
+        [formGroup]="loginForm"
+        fieldName="username"
+        fieldInputType="text"
+      ></app-text-input>
+
+      <app-text-input
+        [formGroup]="loginForm"
+        fieldName="password"
+        fieldInputType="password"
+      ></app-text-input>
+
+      <button
+        type="submit"
+        class="btn btn-primary mt-3"
+        [disabled]="!loginForm.valid"
+      >
+        Sign in
+      </button>
+
+      <p class="text-danger align-self-center mt-3" *ngIf="error">
+        {{ error }}
+      </p>
+    </form>
+
+    <p class="mt-5">Don't have an account yet? Create one.</p>
+    <nav>
+      <a routerLink="/registration" class="btn btn-success w-100"> Sign up </a>
+    </nav>
+  </div>
+</div>

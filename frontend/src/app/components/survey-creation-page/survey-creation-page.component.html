@@ -1,0 +1,61 @@
+<div class="container d-flex flex-column align-items-center vw-100">
+  <p class="h1 text-primary mt-5 mb-5">Survey creation</p>
+  <form
+    [formGroup]="surveyCreationForm"
+    (ngSubmit)="onSubmit()"
+    class="d-flex flex-column justify-content-center align-items-center"
+  >
+    <!-- Basic fields -->
+    <div class="d-flex flex-column w-100">
+      <app-text-input
+        [formGroup]="surveyCreationForm"
+        fieldName="title"
+        fieldInputType="text"
+      ></app-text-input>
+
+      <app-text-input
+        [formGroup]="surveyCreationForm"
+        fieldName="timeframe"
+        fieldInputType="date"
+      ></app-text-input>
+
+      <p
+        *ngIf="
+          surveyCreationForm.controls.timeframe.errors &&
+          surveyCreationForm.controls.timeframe.errors![
+            'timeframeIsAfterToday'
+          ] &&
+          surveyCreationForm.touched
+        "
+        class="text-danger"
+      >
+        Timeframe should be after today's date.
+      </p>
+    </div>
+
+    <p class="mt-5">
+      Define up to 10 questions. Every question should have at least 2 options
+      (max 5).
+    </p>
+
+    <button type="button" (click)="addQuestion()" class="btn btn-dark mt-3">
+      Add question
+    </button>
+
+    <!-- Questions -->
+    <div *ngFor="let q of questions().controls; let i = index" class="w-100">
+      <app-question-creation
+        [questions]="questions()"
+        [questionIndex]="i"
+      ></app-question-creation>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary mt-3 mb-3"
+      [disabled]="!surveyCreationForm.valid"
+    >
+      Create
+    </button>
+  </form>
+</div>

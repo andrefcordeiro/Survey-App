@@ -1,0 +1,22 @@
+<div class="container d-flex flex-column vh-100 w-50">
+  <p class="h1 text-primary m-5 align-self-center">Surveys</p>
+
+  <div
+    class="d-flex flex-column"
+    *ngFor="let survey of surveys"
+    id="survey-list"
+  >
+    <a routerLink="/survey/{{ survey.id }}" class="btn mb-3">
+      <app-survey-min [survey]="survey"></app-survey-min>
+    </a>
+  </div>
+
+  <a
+    routerLink="/survey-creation-page"
+    class="btn btn-primary btn-lg rounded-circle"
+    *ngIf="userRole === roleTypes.COORDINATOR"
+    style="position: fixed; bottom: 10%; right: 3%"
+  >
+    +
+  </a>
+</div>

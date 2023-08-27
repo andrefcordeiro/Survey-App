@@ -1,0 +1,42 @@
+<div class="container d-flex flex-column align-items-center mt-3">
+  <p class="h2 mt-5 mb-5">Questions</p>
+
+  <div
+    *ngFor="let q of surveyStatistics.questions; let i = index"
+    class="container d-flex flex-column mb-5"
+  >
+    <div class="container d-flex flex-row">
+      <div>
+        <p>
+          {{ q.text }}
+        </p>
+        <!-- Options -->
+        <ul
+          class="list-group d-flex align-items-center flex-row w-100"
+          *ngFor="let opt of q.options; let j = index"
+        >
+          {{
+            j + 1
+          }}.
+          <li class="list-group-item w-100 m-1">{{ opt }}</li>
+        </ul>
+      </div>
+
+      <!-- Options selections statistics -->
+      <div class="mb-5" *ngIf="surveyStatistics.questionsStatistics[i]">
+        <canvas
+          baseChart
+          [type]="'pie'"
+          [datasets]="[
+            {
+              data: getNumberOfSelections(
+                surveyStatistics.questionsStatistics[i]
+              )
+            }
+          ]"
+          [labels]="getOptionsNums(surveyStatistics.questionsStatistics[i])"
+        ></canvas>
+      </div>
+    </div>
+  </div>
+</div>

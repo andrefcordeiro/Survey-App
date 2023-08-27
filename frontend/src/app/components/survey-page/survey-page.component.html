@@ -1,0 +1,24 @@
+<div
+  class="container d-flex flex-column align-items-center vh-100 vw-100"
+  *ngIf="contentIsLoaded === true"
+>
+  <p class="h1 text-primary text-center m-5">{{ survey.title }}</p>
+
+  <div class="d-flex flex-column">
+    <app-survey-min [survey]="survey"></app-survey-min>
+  </div>
+
+  <p class="text-success mt-3" *ngIf="surveyIsFinished">
+    This survey is finished.
+  </p>
+
+  <app-survey-statistics
+    [surveyStatistics]="survey"
+    *ngIf="userRole === roleTypes.COORDINATOR || surveyIsFinished"
+  ></app-survey-statistics>
+
+  <app-survey-response
+    *ngIf="userRole === roleTypes.RESPONDENT && !surveyIsFinished"
+    [survey]="survey"
+  ></app-survey-response>
+</div>
