@@ -1,6 +1,7 @@
 package com.project.surveyapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.surveyapp.validators.annotations.IsAfterToday;
 import com.project.surveyapp.entities.Survey;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -23,6 +24,7 @@ public class SurveyDTO implements Serializable {
 
     @NotNull(message = "timeframe should not be empty")
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @IsAfterToday(message = "timeframe should be after today's date")
     private LocalDate timeframe;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
