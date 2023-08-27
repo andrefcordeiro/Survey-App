@@ -1,5 +1,12 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Question } from 'src/app/models/question';
 import { Survey } from 'src/app/models/survey';
@@ -14,7 +21,7 @@ import { ArrayValidators } from 'src/app/service/validators/array.validators';
 export class SurveyCreationPageComponent {
   surveyCreationForm = this.fb.nonNullable.group({
     title: ['', Validators.required],
-    timeframe: [new Date(), Validators.required],
+    timeframe: [new Date(), [Validators.required, this.timeframeIsAfterToday]],
     questions: this.fb.nonNullable.array<Question>(
       [],
       [ArrayValidators.minLength(1), ArrayValidators.maxLength(10)]
@@ -66,6 +73,23 @@ export class SurveyCreationPageComponent {
     return questions;
   }
 
+  private timeframeIsAfterToday(
+    control: AbstractControl
+  ): ValidationErrors | null {
+    const givenDate = new Date(control.value);
+    const today = new Date();
+
+    if (!givenDate) {
+      return null;
+    }
+
+    if (givenDate < today) {
+      return { timeframeIsAfterToday: true };
+    }
+
+    return null;
+  }
+
   onSubmit() {
     let questions: Question[] = this.formatQuestionsForRequest();
 
@@ -81,7 +105,6 @@ export class SurveyCreationPageComponent {
 
     this.surveyService.createSurvey(survey).subscribe({
       next: (val) => {
-        console.log(val);
         this.router.navigate([`/survey/${val.id}`]);
       },
       error: (e) => console.log(e),

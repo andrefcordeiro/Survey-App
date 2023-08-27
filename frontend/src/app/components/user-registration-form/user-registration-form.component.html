@@ -15,11 +15,22 @@
           fieldInputType="text"
         ></app-text-input>
 
-        <app-text-input
-          [formGroup]="registrationForm"
-          fieldName="email"
-          fieldInputType="email"
-        ></app-text-input>
+        <div>
+          <app-text-input
+            [formGroup]="registrationForm"
+            fieldName="email"
+            fieldInputType="email"
+          ></app-text-input>
+          <p
+            *ngIf="
+              registrationForm.controls['email'].invalid &&
+              registrationForm.touched
+            "
+            class="text-danger"
+          >
+            Invalid email format.
+          </p>
+        </div>
       </div>
 
       <div class="fields-row">
@@ -46,13 +57,6 @@
       </app-radio-input>
 
       <p *ngIf="error" class="text-danger mt-3">{{ error }}</p>
-
-      <p
-        *ngIf="registrationForm.invalid && registrationForm.touched"
-        class="text-danger"
-      >
-        Please, provide an email with proper format.
-      </p>
 
       <button
         type="submit"

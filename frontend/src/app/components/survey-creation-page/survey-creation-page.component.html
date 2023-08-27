@@ -1,7 +1,6 @@
 <div class="container d-flex flex-column align-items-center vw-100">
   <p class="h1 text-primary mt-5 mb-5">Survey creation</p>
   <form
-    ngNativeValidate
     [formGroup]="surveyCreationForm"
     (ngSubmit)="onSubmit()"
     class="d-flex flex-column justify-content-center align-items-center"
@@ -19,6 +18,19 @@
         fieldName="timeframe"
         fieldInputType="date"
       ></app-text-input>
+
+      <p
+        *ngIf="
+          surveyCreationForm.controls.timeframe.errors &&
+          surveyCreationForm.controls.timeframe.errors![
+            'timeframeIsAfterToday'
+          ] &&
+          surveyCreationForm.touched
+        "
+        class="text-danger"
+      >
+        Timeframe should be after today's date.
+      </p>
     </div>
 
     <p class="mt-5">
