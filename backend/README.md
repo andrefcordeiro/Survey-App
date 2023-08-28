@@ -1,18 +1,34 @@
 # Backend
 
-This project is a REST API built using Java, Spring, H2 Database, Spring Security and JWT.
+This is a REST API built using Java, Spring, H2 Database, Spring Security and JWT.
 
 ## Table of Contents
 
+- [Setup instructions](#setup-instructions)
 - [Authentication](#authentication)
 - [API Endpoints](#api-endpoints)
+
+###
+
+## Setup instructions
+
+### Build project
+
+```
+mvn clean package
+```
+
+### Run project
+
+```
+ java -jar target/survey-app-0.0.1-SNAPSHOT
+```
 
 ## Authentication
 
 This application uses JWT for authentication and authorization.
 
 The JWT token is returned by the **POST /auth/login** endpoint and need to be inserted as a Bearer token (with a "Bearer" prefix ) in every subsequent request made to the api.
-
 
 <table>
 <tr>
@@ -43,18 +59,17 @@ The JWT token is returned by the **POST /auth/login** endpoint and need to be in
 
 ```json
 {
-	"name": "André",
-	"email": "andrefc36@gmail.com",
-	"username": "andrefcordeiro",
-	"password": "12345",
-	"role": "COORDINATOR"
+  "name": "André",
+  "email": "andrefc36@gmail.com",
+  "username": "andrefcordeiro",
+  "password": "12345",
+  "role": "COORDINATOR"
 }
 ```
 
 </td>
 </tr>
 </table>
-
 
 ### POST /auth/login
 
@@ -68,8 +83,8 @@ The JWT token is returned by the **POST /auth/login** endpoint and need to be in
 
 ```json
 {
-	"username": "andrefcordeiro",
-	"password": "12345"
+  "username": "andrefcordeiro",
+  "password": "12345"
 }
 ```
 
@@ -89,16 +104,14 @@ The JWT token is returned by the **POST /auth/login** endpoint and need to be in
 
 ```json
 {
-	"title": "Music-related questions",
-	"timeframe": "2023-08-13",
-	"questions": [
-		{
-			"text": "How much a dollar cost?",
-			"options": ["1", "infinite", 
-                "everything", "too much", 
-                "nothing"]
-		}
-	]
+  "title": "Music-related questions",
+  "timeframe": "2023-08-13",
+  "questions": [
+    {
+      "text": "How much a dollar cost?",
+      "options": ["1", "infinite", "everything", "too much", "nothing"]
+    }
+  ]
 }
 ```
 
@@ -127,7 +140,6 @@ The JWT token is returned by the **POST /auth/login** endpoint and need to be in
 <td> Get survey by id. </td>
 </tr>
 </table>
-
 
 ### GET /surveys?coordinator={coordinatorId}
 
@@ -166,16 +178,16 @@ The JWT token is returned by the **POST /auth/login** endpoint and need to be in
 
 ```json
 {
-	"questionsResponses": [
-		{
-			"questionId": 1,
-			"optionSelected": 2
-		},
-		{
-			"questionId": 2,
-			"optionSelected": 1
-		}
-	]
+  "questionsResponses": [
+    {
+      "questionId": 1,
+      "optionSelected": 2
+    },
+    {
+      "questionId": 2,
+      "optionSelected": 1
+    }
+  ]
 }
 ```
 
