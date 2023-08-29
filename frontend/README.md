@@ -28,7 +28,7 @@ ng serve
 <table>
 <tr>
 <td> Pages </td> <td> Usage </td> <td> Users allowed to access</td>
-<td> path</td>
+<td> Path</td>
 </tr>
 
 <tr>
@@ -57,7 +57,7 @@ ng serve
 
 <tr>
 <td> Survey statistics page </td> <td> Accessed from the initial page. Allow users to see the results of a survey. </td>
-<td> Coordinators and respondents (when survey is finished) </td>
+<td> Coordinators (whenever they want) and respondents (when survey is finished) </td>
 <td> *root*/survey/:id </td>
 </tr>
 

@@ -21,14 +21,14 @@ mvn clean package
 ### Run project
 
 ```
- java -jar target/survey-app-0.0.1-SNAPSHOT
+ java -jar target/survey-app-0.0.1-SNAPSHOT.jar
 ```
 
 ## Authentication
 
 This application uses JWT for authentication and authorization.
 
-The JWT token is returned by the **POST /auth/login** endpoint and need to be inserted as a Bearer token (with a "Bearer" prefix ) in every subsequent request made to the api.
+The JWT token is returned by the **POST /auth/login** endpoint and need to be inserted as a Bearer token (with a "Bearer" prefix) in every subsequent request made to the api.
 
 <table>
 <tr>
