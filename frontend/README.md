@@ -25,6 +25,40 @@ ng serve
 
 ## Pages
 
+### Login and registration pages
+
+<p align="middle">
+  <img src="./documentation/pages/login.png" width="49%" />
+  <img src="./documentation/pages/user-registration.png" width="49%" /> 
+</p>
+
+### Initial page
+
+![Initial page](./documentation/pages/initial-page.png)
+
+### Survey creation page
+
+<p align="middle">
+  <img src="./documentation/pages/survey-creation-1.png" width="49%" />
+  <img src="./documentation/pages/survey-creation-2.png" width="49%" /> 
+</p>
+
+### Survey response page
+
+<p align="middle">
+  <img src="./documentation/pages/survey-response-1.png" width="49%" />
+  <img src="./documentation/pages/survey-response-2.png" width="49%" /> 
+</p>
+
+### Survey statistics page
+
+<p align="middle">
+  <img src="./documentation/pages/survey-statistics-1.png" width="49%" />
+  <img src="./documentation/pages/survey-statistics-2.png" width="49%" /> 
+</p>
+
+## Pages details
+
 <table>
 <tr>
 <td> Pages </td> <td> Usage </td> <td> Users allowed to access</td>
