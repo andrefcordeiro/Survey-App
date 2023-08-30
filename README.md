@@ -1,8 +1,10 @@
 # Survey App
 
-This project is an application where users can create, manage and complete surveys.
-
+This project is an application where users can create, manage and complete surveys. Coordinators can create and see current statistics of surveys. Respondents can submit responses to surveys and see the results after the survey is finished.
 Based on the idea described [here](https://github.com/florinpop17/app-ideas/blob/master/Projects/3-Advanced/Survey-App.md).
+
+You can check how this app works [here](https://andrefcordeiro.github.io/Survey-App/frontend/).
+
 
 ## Cloning the project
 
