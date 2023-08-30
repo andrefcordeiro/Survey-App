@@ -17,7 +17,9 @@ export class SurveyResponseService {
     };
 
     return this.http.post<SurveyResponse>(
-      'http://localhost:8080/surveys/' + surveyResponse.surveyId + '/responses',
+      'https://survey-app-andrefcordeiro-419f85877d9b.herokuapp.com/surveys/' +
+        surveyResponse.surveyId +
+        '/responses',
       surveyResponse,
       httpOptions
     );
@@ -28,7 +30,7 @@ export class SurveyResponseService {
     respondentId: number
   ): Observable<SurveyResponse> {
     return this.http.get<SurveyResponse>(
-      'http://localhost:8080/surveys/' +
+      'https://survey-app-andrefcordeiro-419f85877d9b.herokuapp.com/surveys/' +
         surveyId +
         '/responses?respondent=' +
         respondentId

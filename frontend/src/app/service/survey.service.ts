@@ -10,16 +10,18 @@ export class SurveyService {
   public getSurveys(userId: Number, userRole: UserRole): Observable<Survey[]> {
     if (userRole === UserRole.COORDINATOR) {
       return this.http.get<Survey[]>(
-        `http://localhost:8080/surveys?coordinator=${userId}`
+        `https://survey-app-andrefcordeiro-419f85877d9b.herokuapp.com/surveys?coordinator=${userId}`
       );
     }
 
-    return this.http.get<Survey[]>('http://localhost:8080/surveys');
+    return this.http.get<Survey[]>(
+      'https://survey-app-andrefcordeiro-419f85877d9b.herokuapp.com/surveys'
+    );
   }
 
   public getSurveyStatistics(surveyId: Number): Observable<SurveyStatistics> {
     return this.http.get<SurveyStatistics>(
-      `http://localhost:8080/surveys/${surveyId}/statistics`
+      `https://survey-app-andrefcordeiro-419f85877d9b.herokuapp.com/surveys/${surveyId}/statistics`
     );
   }
 
@@ -31,14 +33,16 @@ export class SurveyService {
     };
 
     return this.http.post<Survey>(
-      'http://localhost:8080/surveys',
+      'https://survey-app-andrefcordeiro-419f85877d9b.herokuapp.com/surveys',
       survey,
       httpOptions
     );
   }
 
   public getSurvey(surveyId: Number): Observable<Survey> {
-    return this.http.get<Survey>(`http://localhost:8080/surveys/${surveyId}`);
+    return this.http.get<Survey>(
+      `https://survey-app-andrefcordeiro-419f85877d9b.herokuapp.com/surveys/${surveyId}`
+    );
   }
 
   constructor(private http: HttpClient) {}

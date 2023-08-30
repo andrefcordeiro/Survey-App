@@ -22,7 +22,11 @@ export class UserService {
     };
 
     return this.http
-      .post<User>('http://localhost:8080/auth/login', user, httpOptions)
+      .post<User>(
+        'https://survey-app-andrefcordeiro-419f85877d9b.herokuapp.com/auth/login',
+        user,
+        httpOptions
+      )
       .pipe(tap((res) => this.setSession(res)));
   }
 
@@ -34,7 +38,7 @@ export class UserService {
     };
 
     return this.http.post<User>(
-      'http://localhost:8080/auth/register',
+      'https://survey-app-andrefcordeiro-419f85877d9b.herokuapp.com/auth/register',
       user,
       httpOptions
     );

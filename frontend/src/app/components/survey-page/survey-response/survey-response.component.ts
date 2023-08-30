@@ -74,8 +74,6 @@ export class SurveyResponseComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.surveyResponseForm.value);
-
     const questionsResponses: QuestionResponse[] =
       this.surveyResponseForm.value.questionResponses;
 
@@ -83,8 +81,6 @@ export class SurveyResponseComponent implements OnInit {
       this.survey.id!,
       questionsResponses
     );
-
-    console.log(surveyResponse);
 
     this.surveyResponseService.submitSurvey(surveyResponse).subscribe({
       next: (val) => {
